@@ -47,11 +47,16 @@ function detectIosInstallSupportGap() {
 export function usePwaInstall(): UsePwaInstallResult {
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = useState(() => detectStandaloneMode());
+  const [isInstalled, setIsInstalled] = useState(false);
+  const [canUseIosInstructions, setCanUseIosInstructions] = useState(false);
   const [isShowingIosInstructions, setIsShowingIosInstructions] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(display-mode: standalone)");
+    const frameId = window.requestAnimationFrame(() => {
+      setIsInstalled(detectStandaloneMode());
+      setCanUseIosInstructions(detectIosInstallSupportGap());
+    });
 
     function handleBeforeInstallPrompt(event: Event) {
       const nextEvent = event as BeforeInstallPromptEvent;
@@ -63,11 +68,13 @@ export function usePwaInstall(): UsePwaInstallResult {
     function handleAppInstalled() {
       setInstallPrompt(null);
       setIsInstalled(true);
+      setCanUseIosInstructions(false);
       setIsShowingIosInstructions(false);
     }
 
     function handleDisplayModeChange() {
       setIsInstalled(detectStandaloneMode());
+      setCanUseIosInstructions(detectIosInstallSupportGap());
     }
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
@@ -75,6 +82,7 @@ export function usePwaInstall(): UsePwaInstallResult {
     mediaQuery.addEventListener("change", handleDisplayModeChange);
 
     return () => {
+      window.cancelAnimationFrame(frameId);
       window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
       window.removeEventListener("appinstalled", handleAppInstalled);
       mediaQuery.removeEventListener("change", handleDisplayModeChange);
@@ -104,10 +112,10 @@ export function usePwaInstall(): UsePwaInstallResult {
     setIsShowingIosInstructions(false);
   }
 
-  const hasIosInstructions = useMemo(
-    () => detectIosInstallSupportGap() && !isInstalled,
-    [isInstalled],
-  );
+  const hasIosInstructions = useMemo(() => canUseIosInstructions && !isInstalled, [
+    canUseIosInstructions,
+    isInstalled,
+  ]);
 
   return {
     canInstall: !isInstalled && (!!installPrompt || hasIosInstructions),

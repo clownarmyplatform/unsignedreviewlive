@@ -6,13 +6,7 @@ import { AppSplashScreen } from "@/components/app-splash-screen";
 const STARTUP_SPLASH_KEY = "clown-army-startup-splash-seen";
 
 export function PwaBoot() {
-  const [showStartupSplash, setShowStartupSplash] = useState(() => {
-    if (typeof window === "undefined") {
-      return true;
-    }
-
-    return window.sessionStorage.getItem(STARTUP_SPLASH_KEY) !== "seen";
-  });
+  const [showStartupSplash, setShowStartupSplash] = useState(true);
   const [isFadingStartupSplash, setIsFadingStartupSplash] = useState(false);
 
   useEffect(() => {
@@ -23,6 +17,18 @@ export function PwaBoot() {
           updateViaCache: "none",
         })
         .catch(() => undefined);
+    }
+
+    const hasSeenSplash = window.sessionStorage.getItem(STARTUP_SPLASH_KEY) === "seen";
+
+    if (hasSeenSplash) {
+      const hideTimer = window.requestAnimationFrame(() => {
+        setShowStartupSplash(false);
+      });
+
+      return () => {
+        window.cancelAnimationFrame(hideTimer);
+      };
     }
 
     if (!showStartupSplash) {

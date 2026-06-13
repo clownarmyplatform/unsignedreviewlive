@@ -19,20 +19,30 @@ export function AppSplashScreen({
         isFading ? "opacity-0" : "opacity-100"
       }`}
     >
-      <div className="flex w-full max-w-3xl flex-col items-center justify-center px-6 text-center">
+      <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-black">
         {!imageFailed ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src="/assets/URLsplash.webp"
             alt="Clown Army Studio loading animation"
             onError={() => setImageFailed(true)}
-            className="h-auto max-h-[60vh] w-auto max-w-[min(82vw,40rem)] object-contain"
+            className="h-full w-full object-cover"
           />
         ) : null}
 
-        <p className="mt-5 text-sm font-medium tracking-[0.14em] text-zinc-300 sm:text-base">
-          {message}
-        </p>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent px-6 pb-10 pt-20 text-center sm:pb-12">
+          <p className="text-sm font-medium tracking-[0.14em] text-zinc-200 sm:text-base">
+            {message}
+          </p>
+        </div>
+
+        {imageFailed ? (
+          <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+            <p className="text-sm font-medium tracking-[0.14em] text-zinc-200 sm:text-base">
+              {message}
+            </p>
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { hostAccounts, resolveAccountRole } from "@/lib/auth/roles";
+import { LegalLinks } from "@/components/legal/legal-links";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/providers/auth-provider";
 import { PageIntro } from "@/components/ui/page-intro";
@@ -475,6 +476,8 @@ export function AccountSpace() {
             </div>
           </SectionCard>
         </div>
+
+        <LegalLinks />
       </div>
     );
   }
@@ -622,6 +625,8 @@ export function AccountSpace() {
           </div>
         </SectionCard>
       </div>
+
+      <LegalLinks />
     </div>
   );
 }

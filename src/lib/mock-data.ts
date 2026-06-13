@@ -58,28 +58,44 @@ export const adminHighlights = [
 export function getNavItemsForRole(role: AccountRole | null, isSignedIn: boolean) {
   const sharedItems = [
     { href: "/", label: "Home" },
-    { href: "/archive", label: "Archive" },
     { href: "/noticeboard", label: "Notices" },
+    { href: "/queue", label: "WEEKLY SUBMISSIONS" },
     { href: "/totn", label: "TOTN" },
-    { href: "/queue", label: "Queue" },
+    { href: "/archive", label: "Archive" },
   ];
 
   if (!isSignedIn) {
-    return [...sharedItems, { href: "/account", label: "Account" }];
+    return [
+      ...sharedItems,
+      { href: "/account", label: "Account" },
+      { href: "/terms", label: "Terms of Service" },
+      { href: "/privacy", label: "Privacy Policy" },
+    ];
   }
 
   if (role === "admin") {
     return [
-      ...sharedItems,
+      { href: "/", label: "Home" },
       { href: "/admin", label: "Admin" },
+      { href: "/noticeboard", label: "Notices" },
+      { href: "/queue", label: "WEEKLY SUBMISSIONS" },
+      { href: "/totn", label: "TOTN" },
+      { href: "/archive", label: "Archive" },
       { href: "/account", label: "Account" },
+      { href: "/terms", label: "Terms of Service" },
+      { href: "/privacy", label: "Privacy Policy" },
     ];
   }
 
   return [
-    ...sharedItems,
+    { href: "/", label: "Home" },
     { href: "/dashboard", label: "Dashboard" },
-    { href: "/submit", label: "Submit" },
+    { href: "/noticeboard", label: "Notices" },
+    { href: "/queue", label: "WEEKLY SUBMISSIONS" },
+    { href: "/totn", label: "TOTN" },
+    { href: "/archive", label: "Archive" },
     { href: "/account", label: "Account" },
+    { href: "/terms", label: "Terms of Service" },
+    { href: "/privacy", label: "Privacy Policy" },
   ];
 }
