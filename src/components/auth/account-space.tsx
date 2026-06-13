@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { hostAccounts, resolveAccountRole } from "@/lib/auth/roles";
+import { resolveAccountRole } from "@/lib/auth/roles";
 import { LegalLinks } from "@/components/legal/legal-links";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -490,7 +490,7 @@ export function AccountSpace() {
         description="Sign in or create your account."
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="max-w-3xl">
         <SectionCard
           title={mode === "sign-in" ? "Sign In" : "Create Account"}
           description={
@@ -600,29 +600,6 @@ export function AccountSpace() {
               </button>
             ) : null}
           </form>
-        </SectionCard>
-
-        <SectionCard
-          title="Host Access"
-          description="Host/admin account details."
-        >
-          <div className="space-y-3">
-            <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300">
-              Host/admin access is tied to the addresses below.
-            </div>
-            {hostAccounts.map((account) => (
-              <div
-                key={account.email}
-                className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <p className="font-semibold text-white">{account.label}</p>
-                  <StatusPill tone="accent">admin</StatusPill>
-                </div>
-                <p className="mt-2 break-all">{account.email}</p>
-              </div>
-            ))}
-          </div>
         </SectionCard>
       </div>
 
