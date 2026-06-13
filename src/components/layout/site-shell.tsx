@@ -183,10 +183,10 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div
-            className={`overflow-hidden transition-all duration-300 ${
+            className={`transition-all duration-300 ${
               isHeaderCollapsed
-                ? "max-h-0 translate-y-[-8px] opacity-0"
-                : "max-h-80 translate-y-0 opacity-100"
+                ? "max-h-0 translate-y-[-8px] overflow-hidden opacity-0"
+                : "max-h-80 overflow-visible translate-y-0 opacity-100"
             }`}
             aria-hidden={isHeaderCollapsed}
           >
