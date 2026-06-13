@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { AppConstructionGate } from "@/components/app-construction-gate";
 import { PwaBoot } from "@/components/pwa-boot";
 import { GlobalSearchBar } from "@/components/global-search-bar";
 import { useAuth } from "@/components/providers/auth-provider";
@@ -58,6 +59,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top,_rgba(255,107,53,0.18),_transparent_30%),linear-gradient(180deg,_#0f1115_0%,_#08090c_100%)] text-zinc-50">
       <PwaBoot />
+      <AppConstructionGate />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30" />
       <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3 pb-24 pt-3 sm:px-6 sm:pb-28 sm:pt-4 lg:px-8">
         <header
