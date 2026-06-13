@@ -73,7 +73,7 @@ export function PublicHomeShowPanel() {
       }
     }
 
-    loadHomeData();
+    void loadHomeData();
 
     return () => {
       isMounted = false;
@@ -82,19 +82,23 @@ export function PublicHomeShowPanel() {
 
   if (isLoading) {
     return (
-      <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+      <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
         <StatusPill tone="neutral">Loading</StatusPill>
-        <p className="text-zinc-300">Checking upcoming show and new submissions...</p>
+        <p className="break-words text-zinc-300">
+          Checking upcoming show and new submissions...
+        </p>
       </div>
     );
   }
 
   if (!snapshot.show_id) {
     return (
-      <div className="space-y-4 rounded-2xl border border-dashed border-white/10 bg-white/[0.03] p-5">
+      <div className="space-y-4 rounded-2xl border border-dashed border-white/10 bg-white/[0.03] p-4 sm:p-5">
         <StatusPill tone="warning">No upcoming show</StatusPill>
         <div>
-          <p className="text-3xl font-bold text-white">Next show coming soon</p>
+          <p className="text-2xl font-bold text-white sm:text-3xl">
+            Next show coming soon
+          </p>
         </div>
       </div>
     );
@@ -111,7 +115,7 @@ export function PublicHomeShowPanel() {
   const scheduledLabel = formatShowStart(snapshot.show_date);
 
   return (
-    <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+    <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
       <div className="flex flex-wrap gap-2">
         <StatusPill tone="accent">Upcoming Show</StatusPill>
         <StatusPill tone={snapshot.places_left > 0 ? "success" : "warning"}>
@@ -120,29 +124,36 @@ export function PublicHomeShowPanel() {
       </div>
 
       <div>
-        <p className="text-3xl font-bold text-white">{snapshot.show_title}</p>
-        <p className="mt-2 text-zinc-300">
+        <p className="break-words text-2xl font-bold text-white sm:text-3xl">
+          {snapshot.show_title}
+        </p>
+        <p className="mt-2 break-words text-zinc-300">
           {snapshot.show_date
             ? new Date(snapshot.show_date).toLocaleString()
             : "Start time not set"}
         </p>
-        <p className="mt-1 text-sm text-zinc-400">
-          Venue: {snapshot.venue || "TBC"} • Theme: {snapshot.theme || "TBC"}
-        </p>
+        <div className="mt-2 space-y-1 text-sm text-zinc-400">
+          <p className="break-all">
+            <span className="text-zinc-500">Venue:</span> {snapshot.venue || "TBC"}
+          </p>
+          <p className="break-words">
+            <span className="text-zinc-500">Theme:</span> {snapshot.theme || "TBC"}
+          </p>
+        </div>
       </div>
 
       {snapshot.venue && isLiveWindow ? (
         <div>
           <Link
             href={`/show/live?src=${encodeURIComponent(snapshot.venue)}&title=${encodeURIComponent(snapshot.show_title ?? "Live Show")}`}
-            className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200"
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-amber-300 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-black transition hover:bg-amber-200 sm:w-auto sm:px-5 sm:tracking-[0.12em]"
           >
             VIEW LIVE SHOW
           </Link>
         </div>
       ) : (
         <div>
-          <span className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-amber-300/30 bg-amber-300/10 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-amber-100">
+          <span className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-amber-300/30 bg-amber-300/10 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-amber-100 sm:w-auto sm:px-5 sm:tracking-[0.12em]">
             VIEW SHOW HERE AT {scheduledLabel}
           </span>
         </div>
@@ -150,11 +161,11 @@ export function PublicHomeShowPanel() {
 
       <details className="group rounded-2xl border border-white/10 bg-black/20 p-4">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-white">
-          <div>
+          <div className="min-w-0">
             <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
               New Submissions
             </p>
-            <p className="mt-1 font-semibold">
+            <p className="mt-1 break-words font-semibold">
               {submissions.length > 0
                 ? `${submissions.length} recent tracks for this show`
                 : "No submissions"}
@@ -172,10 +183,10 @@ export function PublicHomeShowPanel() {
                 key={submission.id}
                 className="rounded-xl border border-white/10 bg-white/[0.03] p-3"
               >
-                <p className="font-semibold text-white">
+                <p className="break-words font-semibold text-white">
                   {submission.artist_name} - {submission.track_title}
                 </p>
-                <p className="mt-1 text-sm text-zinc-400">
+                <p className="mt-1 break-words text-sm text-zinc-400">
                   {submission.genre} •{" "}
                   {new Date(submission.created_at).toLocaleString()}
                 </p>

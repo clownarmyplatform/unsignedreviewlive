@@ -17,7 +17,7 @@ export function ActionLink({
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-12 items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] transition ${styles}`}
+      className={`inline-flex min-h-12 w-full items-center justify-center rounded-2xl px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] transition sm:w-auto sm:px-5 sm:tracking-[0.12em] ${styles}`}
     >
       {children}
     </Link>

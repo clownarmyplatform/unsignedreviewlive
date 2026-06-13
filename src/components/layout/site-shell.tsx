@@ -56,11 +56,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(255,107,53,0.18),_transparent_30%),linear-gradient(180deg,_#0f1115_0%,_#08090c_100%)] text-zinc-50">
+    <div className="relative min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top,_rgba(255,107,53,0.18),_transparent_30%),linear-gradient(180deg,_#0f1115_0%,_#08090c_100%)] text-zinc-50">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-28 pt-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3 pb-24 pt-3 sm:px-6 sm:pb-28 sm:pt-4 lg:px-8">
         <header
-          className={`sticky top-4 z-40 mb-6 rounded-[28px] border border-white/10 bg-black/30 px-4 py-4 backdrop-blur transition-[padding,transform,background-color] duration-300 sm:px-6 ${
+          className={`sticky top-3 z-40 mb-5 rounded-[24px] border border-white/10 bg-black/30 px-3 py-3 backdrop-blur transition-[padding,transform,background-color] duration-300 sm:top-4 sm:mb-6 sm:rounded-[28px] sm:px-6 sm:py-4 ${
             isHeaderCollapsed ? "translate-y-0 py-3" : ""
           }`}
         >
@@ -71,7 +71,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 alt="Clown Army logo"
                 width={96}
                 height={96}
-                className="h-20 w-20 rounded-3xl border border-white/10 object-cover shadow-lg shadow-black/40 sm:h-24 sm:w-24"
+                className="h-16 w-16 rounded-2xl border border-white/10 object-cover shadow-lg shadow-black/40 sm:h-24 sm:w-24 sm:rounded-3xl"
                 priority
               />
             </Link>
@@ -80,13 +80,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <Link
                 href="/account"
                 aria-label="Open account page"
-                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12 sm:rounded-2xl"
               >
                 <span className="sr-only">Open account page</span>
                 <svg
                   aria-hidden="true"
                   viewBox="0 0 24 24"
-                  className="h-5 w-5 sm:h-6 sm:w-6"
+                  className="h-4 w-4 sm:h-6 sm:w-6"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.8"
@@ -103,7 +103,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 aria-expanded={isMenuOpen}
                 aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 onClick={() => setIsMenuOpen((open) => !open)}
-                className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12 sm:rounded-2xl"
               >
                 <span className="sr-only">
                   {isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -128,14 +128,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               </button>
 
               {isMenuOpen ? (
-                <nav className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-72 rounded-[28px] border border-white/10 bg-[#12141a]/95 p-3 shadow-2xl shadow-black/50 backdrop-blur">
+                <nav className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-[min(18rem,calc(100vw-1.5rem))] rounded-[24px] border border-white/10 bg-[#12141a]/95 p-3 shadow-2xl shadow-black/50 backdrop-blur sm:w-72 sm:rounded-[28px]">
                   <div className="grid gap-2">
                     {navItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em] text-zinc-100 transition hover:border-amber-300/40 hover:bg-amber-300/10"
+                        className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100 transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:tracking-[0.16em]"
                       >
                         {item.label}
                       </Link>
@@ -159,7 +159,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             </p>
             <Link
               href="/"
-              className="font-display text-3xl uppercase tracking-[0.08em] text-white"
+              className="font-display text-2xl uppercase leading-none tracking-[0.06em] text-white sm:text-3xl sm:tracking-[0.08em]"
             >
               Clown Army Studio
             </Link>
