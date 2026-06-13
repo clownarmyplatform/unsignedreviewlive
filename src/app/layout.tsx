@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Ubuntu } from "next/font/google";
 import { AuthProvider } from "@/components/providers/auth-provider";
 import { SiteShell } from "@/components/layout/site-shell";
@@ -17,8 +17,25 @@ const displayFont = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Unsigned Review Live / Clown Army",
-  description: "Foundation for weekly music show submissions and queue management.",
+  title: "Clown Army Studio",
+  description: "Weekly music show submissions, queue control, and community updates.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black",
+    title: "CA Studio",
+  },
+  icons: {
+    apple: "/apple-icon.png",
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({

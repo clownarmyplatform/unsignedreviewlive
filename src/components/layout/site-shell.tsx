@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { PwaBoot } from "@/components/pwa-boot";
 import { GlobalSearchBar } from "@/components/global-search-bar";
 import { useAuth } from "@/components/providers/auth-provider";
+import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { getNavItemsForRole } from "@/lib/mock-data";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -14,27 +16,24 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
   const navItems = getNavItemsForRole(role, !!user);
+  const {
+    canInstall,
+    hasIosInstructions,
+    isShowingIosInstructions,
+    promptInstall,
+    setIsShowingIosInstructions,
+  } = usePwaInstall();
 
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-
     function handleScroll() {
       const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY;
-      const hasMovedEnough = Math.abs(currentScrollY - lastScrollY) > 8;
 
       if (currentScrollY < 24) {
         setIsHeaderCollapsed(false);
-        lastScrollY = currentScrollY;
         return;
       }
 
-      if (!hasMovedEnough) {
-        return;
-      }
-
-      setIsHeaderCollapsed(isScrollingDown);
-      lastScrollY = currentScrollY;
+      setIsHeaderCollapsed(true);
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -48,19 +47,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     const frameId = window.requestAnimationFrame(() => {
       setIsHeaderCollapsed(false);
       setIsMenuOpen(false);
+      setIsShowingIosInstructions(false);
     });
 
     return () => {
       window.cancelAnimationFrame(frameId);
     };
-  }, [pathname]);
+  }, [pathname, setIsShowingIosInstructions]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top,_rgba(255,107,53,0.18),_transparent_30%),linear-gradient(180deg,_#0f1115_0%,_#08090c_100%)] text-zinc-50">
+      <PwaBoot />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30" />
       <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3 pb-24 pt-3 sm:px-6 sm:pb-28 sm:pt-4 lg:px-8">
         <header
-          className={`sticky top-3 z-40 mb-5 rounded-[24px] border border-white/10 bg-black/30 px-3 py-3 backdrop-blur transition-[padding,transform,background-color] duration-300 sm:top-4 sm:mb-6 sm:rounded-[28px] sm:px-6 sm:py-4 ${
+          className={`sticky top-0 z-40 mb-5 rounded-[24px] border border-white/10 bg-black/30 px-3 py-3 backdrop-blur transition-[padding,transform,background-color,border-radius] duration-300 sm:mb-6 sm:rounded-[28px] sm:px-6 sm:py-4 ${
             isHeaderCollapsed ? "translate-y-0 py-3" : ""
           }`}
         >
@@ -140,7 +141,23 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                         {item.label}
                       </Link>
                     ))}
+                    {canInstall ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          void promptInstall();
+                        }}
+                        className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-left text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100 transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:tracking-[0.16em]"
+                      >
+                        {hasIosInstructions ? "Add to Home Screen" : "Install App"}
+                      </button>
+                    ) : null}
                   </div>
+                  {canInstall && hasIosInstructions && isShowingIosInstructions ? (
+                    <div className="mt-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-zinc-300">
+                      To install: tap Share, then Add to Home Screen.
+                    </div>
+                  ) : null}
                 </nav>
               ) : null}
             </div>

@@ -3,16 +3,22 @@
 import { useState } from "react";
 
 type AppSplashScreenProps = {
+  isFading?: boolean;
   message?: string;
 };
 
 export function AppSplashScreen({
+  isFading = false,
   message = "Loading Clown Army Studio...",
 }: AppSplashScreenProps) {
   const [imageFailed, setImageFailed] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-[200] flex h-screen w-screen items-center justify-center bg-black">
+    <div
+      className={`fixed inset-0 z-[200] flex h-screen w-screen items-center justify-center bg-black transition-opacity duration-400 ${
+        isFading ? "opacity-0" : "opacity-100"
+      }`}
+    >
       <div className="flex w-full max-w-3xl flex-col items-center justify-center px-6 text-center">
         {!imageFailed ? (
           // eslint-disable-next-line @next/next/no-img-element
