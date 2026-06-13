@@ -11,6 +11,10 @@ export const hostAccounts: HostAccount[] = [
     label: "Unsigned Review Host",
   },
   {
+    email: "newton_excessive@hotmail.co.uk",
+    label: "Clown Army Admin",
+  },
+  {
     email: "clownarmyhost@gmail.com",
     label: "Clown Army Host",
   },
