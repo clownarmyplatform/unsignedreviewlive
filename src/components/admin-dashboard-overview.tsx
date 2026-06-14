@@ -286,13 +286,6 @@ export function AdminDashboardOverview({
         featured: false,
       },
       {
-        label: "Noticeboard posts",
-        value: `${snapshot.noticeboard_count} live`,
-        tone: snapshot.noticeboard_count > 0 ? "neutral" : "warning",
-        href: undefined,
-        featured: false,
-      },
-      {
         label: "Places left",
         value: `${snapshot.places_left} remaining`,
         tone: snapshot.places_left > 0 ? "success" : "warning",
