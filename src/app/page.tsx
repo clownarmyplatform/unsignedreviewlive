@@ -17,33 +17,21 @@ export default function HomePage() {
       />
 
       <div className="grid gap-6">
-        <SectionCard
-          title="Upcoming Show"
-          description="See the next show and the latest activity around it."
-        >
+        <SectionCard title="Upcoming Show">
           <PublicHomeShowPanel />
         </SectionCard>
 
-        <SectionCard
-          title="Previous TOTN Winners"
-          description="The latest Track of the Night winner."
-        >
+        <SectionCard title="Previous TOTN Winners">
           <LatestTotnWinnerPanel />
         </SectionCard>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <SectionCard
-          title="Noticeboard"
-          description="Short, scannable updates for the whole community."
-        >
+        <SectionCard title="Noticeboard">
           <HomeNoticeboardPreview />
         </SectionCard>
 
-        <SectionCard
-          title="Show Flow"
-          description="A quick look at this week's queue and TOTN activity."
-        >
+        <SectionCard title="Show Flow">
           <HomeShowFlowPanel />
         </SectionCard>
       </div>

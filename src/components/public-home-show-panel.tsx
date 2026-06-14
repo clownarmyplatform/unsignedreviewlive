@@ -143,22 +143,27 @@ export function PublicHomeShowPanel() {
         </div>
       </div>
 
-      {snapshot.venue && isLiveWindow ? (
-        <div>
+      <div className="flex flex-col items-end gap-3">
+        <Link
+          href="/submit"
+          className="inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+        >
+          Submit Track
+        </Link>
+
+        {snapshot.venue && isLiveWindow ? (
           <Link
             href={`/show/live?src=${encodeURIComponent(snapshot.venue)}&title=${encodeURIComponent(snapshot.show_title ?? "Live Show")}`}
             className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-amber-300 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-black transition hover:bg-amber-200 sm:w-auto sm:px-5 sm:tracking-[0.12em]"
           >
             VIEW LIVE SHOW
           </Link>
-        </div>
-      ) : (
-        <div>
+        ) : (
           <span className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-amber-300/30 bg-amber-300/10 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-amber-100 sm:w-auto sm:px-5 sm:tracking-[0.12em]">
             VIEW SHOW HERE AT {scheduledLabel}
           </span>
-        </div>
-      )}
+        )}
+      </div>
 
       <details className="group rounded-2xl border border-white/10 bg-black/20 p-4">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-white">

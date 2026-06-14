@@ -8,13 +8,9 @@ export default function NoticeboardPage() {
       <PageIntro
         eyebrow="Community updates"
         title="Noticeboard"
-        description="A central place for show notices, reminders, and community posts that should not get buried in chat."
       />
 
-      <SectionCard
-        title="Latest Posts"
-        description="Live noticeboard posts from the host/admin side of the app."
-      >
+      <SectionCard title="Latest Posts">
         <LiveNoticeboardBoard />
       </SectionCard>
     </div>

@@ -13,14 +13,12 @@ export default function SubmitPage() {
           <PageIntro
             eyebrow="Track submissions"
             title="Submit A Track"
-            description="A straightforward form artists can use without hunting through comment sections. This is now the first real Supabase-backed flow in the app."
           />
 
           <SubmissionWindowBanner />
 
           <SectionCard
             title="Submission Form"
-            description="Submitting here writes a real submitted track entry to the nearest upcoming show in Supabase."
           >
             <SubmitTrackForm />
           </SectionCard>
