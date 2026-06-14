@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { StatusPill } from "@/components/ui/status-pill";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 
@@ -181,15 +182,23 @@ export function PublicHomeShowPanel() {
             submissions.map((submission) => (
               <div
                 key={submission.id}
-                className="rounded-xl border border-white/10 bg-white/[0.03] p-3"
+                className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3"
               >
-                <p className="break-words font-semibold text-white">
-                  {submission.artist_name} - {submission.track_title}
-                </p>
-                <p className="mt-1 break-words text-sm text-zinc-400">
-                  {submission.genre} •{" "}
-                  {new Date(submission.created_at).toLocaleString()}
-                </p>
+                <UserAvatar
+                  imageUrl={submission.avatar_url}
+                  name={submission.artist_name}
+                  className="h-10 w-10"
+                  textClassName="text-xs"
+                />
+                <div className="min-w-0">
+                  <p className="break-words font-semibold text-white">
+                    {submission.artist_name} - {submission.track_title}
+                  </p>
+                  <p className="mt-1 break-words text-sm text-zinc-400">
+                    {submission.genre} |{" "}
+                    {new Date(submission.created_at).toLocaleString()}
+                  </p>
+                </div>
               </div>
             ))
           ) : (

@@ -6,6 +6,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 import { SectionCard } from "@/components/ui/section-card";
 import { StatusPill } from "@/components/ui/status-pill";
+import { UserAvatar } from "@/components/ui/user-avatar";
 
 type AdminSnapshot =
   Database["public"]["Functions"]["get_admin_dashboard_snapshot"]["Returns"][number];
@@ -69,7 +70,7 @@ function formatSubmissionStatus(submission: SubmissionRow | null) {
 }
 
 export function DashboardStatusPanel() {
-  const { user } = useAuth();
+  const { profile, user } = useAuth();
   const [snapshot, setSnapshot] = useState<AdminSnapshot>(emptySnapshot);
   const [submission, setSubmission] = useState<SubmissionRow | null>(null);
   const [nominations, setNominations] = useState<TotnBoardRow[]>([]);
@@ -233,15 +234,32 @@ export function DashboardStatusPanel() {
               {formatSubmissionStatus(submission)}
             </StatusPill>
           </div>
-          <p className="mt-3 text-sm leading-6 text-zinc-300">
-            {isLoading
-              ? "Checking your current show submission..."
-              : submission
-                ? `${submission.artist_name} - ${submission.track_title}`
+          {submission ? (
+            <div className="mt-3 flex items-start gap-3">
+              <UserAvatar
+                imageUrl={profile?.avatarUrl ?? null}
+                name={submission.artist_name}
+                className="h-12 w-12"
+                textClassName="text-xs"
+              />
+              <div className="min-w-0">
+                <p className="break-words text-sm leading-6 text-zinc-300">
+                  {submission.artist_name} - {submission.track_title}
+                </p>
+                <p className="mt-1 text-sm leading-6 text-zinc-500">
+                  {submission.genre || "Genre not set"}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <p className="mt-3 text-sm leading-6 text-zinc-300">
+              {isLoading
+                ? "Checking your current show submission..."
                 : snapshot.show_id
                   ? "No track submitted for this show."
                   : "No upcoming show."}
-          </p>
+            </p>
+          )}
           {submission ? (
             <p className="mt-2 text-sm leading-6 text-zinc-400">
               {submission.moderation_status === "rejected"

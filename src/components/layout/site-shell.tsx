@@ -8,11 +8,12 @@ import { AppConstructionGate } from "@/components/app-construction-gate";
 import { PwaBoot } from "@/components/pwa-boot";
 import { GlobalSearchBar } from "@/components/global-search-bar";
 import { useAuth } from "@/components/providers/auth-provider";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { getNavItemsForRole } from "@/lib/mock-data";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
-  const { role, user } = useAuth();
+  const { profile, role, user } = useAuth();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
@@ -86,19 +87,28 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12 sm:rounded-2xl"
               >
                 <span className="sr-only">Open account page</span>
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 sm:h-6 sm:w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="8" r="3.25" />
-                  <path d="M5 19.25c1.55-3.1 4.25-4.65 7-4.65s5.45 1.55 7 4.65" />
-                </svg>
+                {profile?.avatarUrl ? (
+                  <UserAvatar
+                    imageUrl={profile.avatarUrl}
+                    name={profile.displayName ?? user?.email ?? "Account"}
+                    className="h-7 w-7 border-none sm:h-10 sm:w-10"
+                    textClassName="text-[10px] sm:text-xs"
+                  />
+                ) : (
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-4 w-4 sm:h-6 sm:w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="12" cy="8" r="3.25" />
+                    <path d="M5 19.25c1.55-3.1 4.25-4.65 7-4.65s5.45 1.55 7 4.65" />
+                  </svg>
+                )}
               </Link>
 
               <button

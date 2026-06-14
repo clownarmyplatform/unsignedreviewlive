@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useAuth } from "@/components/providers/auth-provider";
 import { PanelSearchInput } from "@/components/ui/panel-search-input";
 import { StatusPill } from "@/components/ui/status-pill";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { useDebouncedValue } from "@/hooks/use-debounced-value";
 import {
   GLOBAL_SEARCH_DEBOUNCE_MS,
@@ -398,12 +399,12 @@ export function AdminModerationPanel() {
         </summary>
 
         <div className="mt-4 space-y-4">
-        <PanelSearchInput
-          label="Search users"
-          placeholder="Search by display name, email, or status"
-          value={userSearchQuery}
-          onChange={setUserSearchQuery}
-        />
+          <PanelSearchInput
+            label="Search users"
+            placeholder="Search by display name, email, or status"
+            value={userSearchQuery}
+            onChange={setUserSearchQuery}
+          />
 
           <div className="max-h-[34rem] space-y-3 overflow-y-auto pr-1 [scrollbar-color:#3f3f46_#18181b] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-track]:bg-zinc-900/80 [&::-webkit-scrollbar]:w-2">
             {userSearchQuery.trim().length > 0 &&
@@ -429,27 +430,35 @@ export function AdminModerationPanel() {
                     className="rounded-[22px] border border-white/10 bg-black/20 p-4"
                   >
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                      <div>
-                        <div className="flex flex-wrap gap-2">
-                          <StatusPill tone={moderationStatusTone(account.account_status)}>
-                            {account.account_status}
-                          </StatusPill>
-                          <StatusPill tone="neutral">
-                            {account.submission_count} submissions
-                          </StatusPill>
-                          {isCurrentUser ? (
-                            <StatusPill tone="neutral">Current session</StatusPill>
-                          ) : null}
+                      <div className="flex items-start gap-3">
+                        <UserAvatar
+                          imageUrl={account.avatar_url}
+                          name={account.display_name ?? account.email}
+                          className="h-12 w-12"
+                          textClassName="text-xs"
+                        />
+                        <div>
+                          <div className="flex flex-wrap gap-2">
+                            <StatusPill tone={moderationStatusTone(account.account_status)}>
+                              {account.account_status}
+                            </StatusPill>
+                            <StatusPill tone="neutral">
+                              {account.submission_count} submissions
+                            </StatusPill>
+                            {isCurrentUser ? (
+                              <StatusPill tone="neutral">Current session</StatusPill>
+                            ) : null}
+                          </div>
+                          <p className="mt-3 text-lg font-semibold text-white">
+                            {account.display_name || "No display name"}
+                          </p>
+                          <p className="mt-1 break-all text-sm leading-6 text-zinc-300">
+                            {account.email}
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-zinc-500">
+                            Created {formatModerationDate(account.created_at)}
+                          </p>
                         </div>
-                        <p className="mt-3 text-lg font-semibold text-white">
-                          {account.display_name || "No display name"}
-                        </p>
-                        <p className="mt-1 break-all text-sm leading-6 text-zinc-300">
-                          {account.email}
-                        </p>
-                        <p className="mt-1 text-sm leading-6 text-zinc-500">
-                          Created {formatModerationDate(account.created_at)}
-                        </p>
                       </div>
 
                       <div className="flex flex-wrap gap-3">
@@ -535,30 +544,41 @@ export function AdminModerationPanel() {
                   className="rounded-[22px] border border-white/10 bg-black/20 p-4"
                 >
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                    <div>
-                      <div className="flex flex-wrap gap-2">
-                        <StatusPill tone={moderationStatusTone(submission.moderation_status)}>
-                          {submission.moderation_status}
-                        </StatusPill>
-                        <StatusPill tone="neutral">
-                          Queue: {submission.queue_status === "pending" ? "submitted" : submission.queue_status}
-                        </StatusPill>
-                      </div>
-                      <p className="mt-3 text-lg font-semibold text-white">
-                        {submission.artist_name} - {submission.track_title}
-                      </p>
-                      <p className="mt-1 text-sm leading-6 text-zinc-300">
-                        Submitter: {submission.submitter}
-                      </p>
-                      {submission.submitter_email ? (
-                        <p className="mt-1 break-all text-sm leading-6 text-zinc-500">
-                          {submission.submitter_email}
+                    <div className="flex items-start gap-3">
+                      <UserAvatar
+                        imageUrl={submission.submitter_avatar_url}
+                        name={submission.submitter}
+                        className="h-12 w-12"
+                        textClassName="text-xs"
+                      />
+                      <div>
+                        <div className="flex flex-wrap gap-2">
+                          <StatusPill tone={moderationStatusTone(submission.moderation_status)}>
+                            {submission.moderation_status}
+                          </StatusPill>
+                          <StatusPill tone="neutral">
+                            Queue:{" "}
+                            {submission.queue_status === "pending"
+                              ? "submitted"
+                              : submission.queue_status}
+                          </StatusPill>
+                        </div>
+                        <p className="mt-3 text-lg font-semibold text-white">
+                          {submission.artist_name} - {submission.track_title}
                         </p>
-                      ) : null}
-                      <p className="mt-1 text-sm leading-6 text-zinc-500">
-                        Show: {submission.show_title || "Unassigned"} | Submitted{" "}
-                        {formatModerationDate(submission.created_at)}
-                      </p>
+                        <p className="mt-1 text-sm leading-6 text-zinc-300">
+                          Submitter: {submission.submitter}
+                        </p>
+                        {submission.submitter_email ? (
+                          <p className="mt-1 break-all text-sm leading-6 text-zinc-500">
+                            {submission.submitter_email}
+                          </p>
+                        ) : null}
+                        <p className="mt-1 text-sm leading-6 text-zinc-500">
+                          Show: {submission.show_title || "Unassigned"} | Submitted{" "}
+                          {formatModerationDate(submission.created_at)}
+                        </p>
+                      </div>
                     </div>
 
                     <div className="flex flex-wrap gap-3">

@@ -21,6 +21,10 @@ type AuthContextValue = {
   isLoading: boolean;
   hostAccount: HostAccount | null;
   isAdmin: boolean;
+  profile: {
+    avatarUrl: string | null;
+    displayName: string | null;
+  } | null;
   role: AccountRole | null;
   session: Session | null;
   user: User | null;
@@ -30,6 +34,10 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
+  const [profile, setProfile] = useState<{
+    avatarUrl: string | null;
+    displayName: string | null;
+  } | null>(null);
   const [accountStatus, setAccountStatus] = useState<"active" | "suspended" | null>(
     null,
   );
@@ -46,6 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (!nextSession?.user) {
         setSession(null);
+        setProfile(null);
         setAccountStatus(null);
         setIsLoading(false);
         return;
@@ -54,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         const { data, error } = await supabase
           .from("user_profiles")
-          .select("account_status")
+          .select("account_status, display_name, avatar_url")
           .eq("auth_user_id", nextSession.user.id)
           .maybeSingle();
 
@@ -72,12 +81,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             return;
           }
           setSession(null);
+          setProfile(null);
           setAccountStatus("suspended");
           setIsLoading(false);
           return;
         }
 
         setSession(nextSession);
+        setProfile({
+          avatarUrl: data?.avatar_url ?? null,
+          displayName:
+            data?.display_name ??
+            (typeof nextSession.user.user_metadata.display_name === "string"
+              ? nextSession.user.user_metadata.display_name
+              : null),
+        });
         setAccountStatus(data?.account_status ?? "active");
       } finally {
         if (isMounted) {
@@ -96,9 +114,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       void syncSession(nextSession ?? null);
     });
 
+    function handleProfileUpdated(event: Event) {
+      const customEvent = event as CustomEvent<{
+        avatarUrl?: string | null;
+        displayName?: string | null;
+      }>;
+
+      setProfile((current) => {
+        if (!current) {
+          return current;
+        }
+
+        return {
+          avatarUrl:
+            customEvent.detail.avatarUrl === undefined
+              ? current.avatarUrl
+              : customEvent.detail.avatarUrl,
+          displayName:
+            customEvent.detail.displayName === undefined
+              ? current.displayName
+              : customEvent.detail.displayName,
+        };
+      });
+    }
+
+    window.addEventListener("profile-updated", handleProfileUpdated as EventListener);
+
     return () => {
       isMounted = false;
       subscription.unsubscribe();
+      window.removeEventListener(
+        "profile-updated",
+        handleProfileUpdated as EventListener,
+      );
     };
   }, []);
 
@@ -110,11 +158,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       hostAccount: resolveHostAccount(user?.email),
       isAdmin: resolveAccountRole(user?.email) === "admin",
       isLoading,
+      profile,
       role: resolveAccountRole(user?.email),
       session,
       user,
     };
-  }, [accountStatus, isLoading, session]);
+  }, [accountStatus, isLoading, profile, session]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

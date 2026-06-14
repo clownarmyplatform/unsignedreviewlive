@@ -6,6 +6,14 @@ import { resolveAccountRole } from "@/lib/auth/roles";
 import { LegalLinks } from "@/components/legal/legal-links";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/providers/auth-provider";
+import { UserAvatar } from "@/components/ui/user-avatar";
+import {
+  AVATAR_BUCKET,
+  AVATAR_MAX_UPLOAD_BYTES,
+  getAvatarPath,
+  isSupportedAvatarType,
+  processAvatarFile,
+} from "@/lib/avatar";
 import { PageIntro } from "@/components/ui/page-intro";
 import { SectionCard } from "@/components/ui/section-card";
 import { StatusPill } from "@/components/ui/status-pill";
@@ -21,7 +29,7 @@ type AuthMessage =
 
 export function AccountSpace() {
   const router = useRouter();
-  const { isAdmin, isLoading, role, user } = useAuth();
+  const { isAdmin, isLoading, profile, role, user } = useAuth();
   const [mode, setMode] = useState<AuthMode>("sign-in");
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,6 +42,16 @@ export function AccountSpace() {
   const [deleteMessage, setDeleteMessage] = useState<AuthMessage>(null);
   const [isSettingsPending, startSettingsTransition] = useTransition();
   const [isDeletePending, startDeleteTransition] = useTransition();
+  const [avatarBlob, setAvatarBlob] = useState<Blob | null>(null);
+  const [avatarPreviewUrl, setAvatarPreviewUrl] = useState<string | null>(null);
+  const [avatarMessage, setAvatarMessage] = useState<AuthMessage>(null);
+  const [isAvatarPending, startAvatarTransition] = useTransition();
+  const currentAvatarUrl = profile?.avatarUrl ?? null;
+  const currentDisplayName =
+    profile?.displayName ??
+    (typeof user?.user_metadata.display_name === "string"
+      ? user.user_metadata.display_name
+      : null);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
@@ -90,6 +108,14 @@ export function AccountSpace() {
       subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (avatarPreviewUrl) {
+        URL.revokeObjectURL(avatarPreviewUrl);
+      }
+    };
+  }, [avatarPreviewUrl]);
 
   async function handleSignOut() {
     const supabase = getSupabaseBrowserClient();
@@ -273,10 +299,153 @@ export function AccountSpace() {
 
       form.reset();
       setIsRecoveryMode(false);
+      if (nextDisplayName) {
+        window.dispatchEvent(
+          new CustomEvent("profile-updated", {
+            detail: {
+              displayName: nextDisplayName,
+            },
+          }),
+        );
+      }
       setSettingsMessage({
         type: "success",
         text: nextPassword ? "Password updated successfully." : "Account details updated.",
       });
+    });
+  }
+
+  function handleAvatarSelection(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] ?? null;
+
+    if (!file) {
+      if (avatarPreviewUrl) {
+        URL.revokeObjectURL(avatarPreviewUrl);
+      }
+      setAvatarBlob(null);
+      setAvatarPreviewUrl(null);
+      setAvatarMessage(null);
+      return;
+    }
+
+    startAvatarTransition(async () => {
+      setAvatarMessage(null);
+
+      if (file.size > AVATAR_MAX_UPLOAD_BYTES) {
+        setAvatarMessage({
+          type: "error",
+          text: "Avatar files must be 5MB or smaller before processing.",
+        });
+        event.target.value = "";
+        return;
+      }
+
+      if (!isSupportedAvatarType(file.type)) {
+        setAvatarMessage({
+          type: "error",
+          text: "Only JPG, PNG, and WebP avatar files are supported.",
+        });
+        event.target.value = "";
+        return;
+      }
+
+      try {
+        const processedBlob = await processAvatarFile(file);
+        const nextPreviewUrl = URL.createObjectURL(processedBlob);
+
+        if (avatarPreviewUrl) {
+          URL.revokeObjectURL(avatarPreviewUrl);
+        }
+
+        setAvatarBlob(processedBlob);
+        setAvatarPreviewUrl(nextPreviewUrl);
+        setAvatarMessage({
+          type: "success",
+          text: "Avatar prepared. Save it below to upload the compressed WebP version.",
+        });
+      } catch (error) {
+        setAvatarMessage({
+          type: "error",
+          text:
+            error instanceof Error
+              ? error.message
+              : "Could not prepare that avatar image.",
+        });
+        event.target.value = "";
+      }
+    });
+  }
+
+  function handleAvatarUpload() {
+    if (!user || !avatarBlob) {
+      return;
+    }
+
+    startAvatarTransition(async () => {
+      setAvatarMessage(null);
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const avatarPath = getAvatarPath(user.id);
+        const avatarFile = new File([avatarBlob], "avatar.webp", {
+          type: "image/webp",
+        });
+        const { error: uploadError } = await supabase.storage
+          .from(AVATAR_BUCKET)
+          .upload(avatarPath, avatarFile, {
+            cacheControl: "3600",
+            contentType: "image/webp",
+            upsert: true,
+          });
+
+        if (uploadError) {
+          setAvatarMessage({
+            type: "error",
+            text: uploadError.message,
+          });
+          return;
+        }
+
+        const { data } = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(avatarPath);
+        const nextAvatarUrl = `${data.publicUrl}?v=${Date.now()}`;
+        const { error: profileError } = await supabase.rpc("update_own_profile_avatar", {
+          p_avatar_url: nextAvatarUrl,
+          p_avatar_path: avatarPath,
+        });
+
+        if (profileError) {
+          setAvatarMessage({
+            type: "error",
+            text: profileError.message,
+          });
+          return;
+        }
+
+        setAvatarBlob(null);
+        if (avatarPreviewUrl) {
+          URL.revokeObjectURL(avatarPreviewUrl);
+        }
+        setAvatarPreviewUrl(null);
+        window.dispatchEvent(
+          new CustomEvent("profile-updated", {
+            detail: {
+              avatarUrl: nextAvatarUrl,
+            },
+          }),
+        );
+        setAvatarMessage({
+          type: "success",
+          text: "Profile picture uploaded successfully.",
+        });
+      } catch (error) {
+        setAvatarMessage({
+          type: "error",
+          text:
+            error instanceof Error
+              ? error.message
+              : "Could not upload your profile picture.",
+        });
+      }
     });
   }
 
@@ -356,9 +525,27 @@ export function AccountSpace() {
               <StatusPill tone={isAdmin ? "accent" : "success"}>
                 {isAdmin ? "Admin / Host" : "Signed In"}
               </StatusPill>
+              <div className="flex items-center gap-4 rounded-[22px] border border-white/10 bg-white/[0.03] p-4">
+                <UserAvatar
+                  imageUrl={avatarPreviewUrl ?? currentAvatarUrl}
+                  name={currentDisplayName ?? user.email ?? "User"}
+                  className="h-20 w-20"
+                  textClassName="text-lg"
+                />
+                <div className="min-w-0">
+                  <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
+                    Profile Picture
+                  </p>
+                  {currentAvatarUrl || avatarPreviewUrl ? null : (
+                    <p className="mt-2 text-sm leading-6 text-zinc-300">
+                      No profile picture uploaded yet.
+                    </p>
+                  )}
+                </div>
+              </div>
               <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-7 text-zinc-300">
                 <p>Email: {user.email}</p>
-                <p>Name: {String(user.user_metadata.display_name ?? "Not set")}</p>
+                <p>Name: {currentDisplayName ?? "Not set"}</p>
                 <p>Account type: {isAdmin ? "Host / Admin" : "User"}</p>
                 <p>User ID: {user.id}</p>
               </div>
@@ -395,10 +582,42 @@ export function AccountSpace() {
                 </span>
                 <input
                   name="display_name"
-                  defaultValue={String(user.user_metadata.display_name ?? "")}
+                  defaultValue={currentDisplayName ?? ""}
                   className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
                 />
               </label>
+
+              <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+                <p className="text-sm font-medium text-zinc-200">Profile picture</p>
+                <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <UserAvatar
+                    imageUrl={avatarPreviewUrl ?? currentAvatarUrl}
+                    name={currentDisplayName ?? user.email ?? "User"}
+                    className="h-16 w-16"
+                    textClassName="text-sm"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp"
+                      onChange={handleAvatarSelection}
+                      className="block w-full text-sm text-zinc-300 file:mr-4 file:rounded-2xl file:border-0 file:bg-amber-300 file:px-4 file:py-2 file:font-semibold file:text-black hover:file:bg-amber-200"
+                    />
+                    <p className="mt-2 text-sm leading-6 text-zinc-400">
+                      JPG, PNG, or WebP. Max 5MB before processing.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleAvatarUpload}
+                  disabled={isAvatarPending || !avatarBlob}
+                  className="mt-4 min-h-12 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isAvatarPending ? "Uploading..." : "Save Profile Picture"}
+                </button>
+              </div>
 
               <label className="block">
                 <span className="mb-2 block text-sm font-medium text-zinc-200">
@@ -420,6 +639,18 @@ export function AccountSpace() {
                   }`}
                 >
                   {settingsMessage.text}
+                </div>
+              ) : null}
+
+              {avatarMessage ? (
+                <div
+                  className={`rounded-2xl border px-4 py-3 text-sm leading-6 ${
+                    avatarMessage.type === "success"
+                      ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-100"
+                      : "border-rose-400/30 bg-rose-400/10 text-rose-100"
+                  }`}
+                >
+                  {avatarMessage.text}
                 </div>
               ) : null}
 

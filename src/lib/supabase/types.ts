@@ -131,6 +131,8 @@ export type Database = {
           auth_user_id: string;
           email: string;
           display_name: string | null;
+          avatar_url: string | null;
+          avatar_path: string | null;
           account_status: "active" | "suspended";
           created_at: string;
           updated_at: string;
@@ -141,6 +143,8 @@ export type Database = {
           auth_user_id: string;
           email: string;
           display_name?: string | null;
+          avatar_url?: string | null;
+          avatar_path?: string | null;
           account_status?: "active" | "suspended";
           created_at?: string;
           updated_at?: string;
@@ -151,6 +155,8 @@ export type Database = {
           auth_user_id?: string;
           email?: string;
           display_name?: string | null;
+          avatar_url?: string | null;
+          avatar_path?: string | null;
           account_status?: "active" | "suspended";
           created_at?: string;
           updated_at?: string;
@@ -321,6 +327,7 @@ export type Database = {
           auth_user_id: string;
           display_name: string | null;
           email: string;
+          avatar_url: string | null;
           created_at: string;
           submission_count: number;
           account_status: string;
@@ -334,6 +341,7 @@ export type Database = {
           auth_user_id: string;
           display_name: string | null;
           email: string;
+          avatar_url: string | null;
           created_at: string;
           submission_count: number;
           account_status: string;
@@ -354,6 +362,7 @@ export type Database = {
           track_title: string;
           submitter: string;
           submitter_email: string | null;
+          submitter_avatar_url: string | null;
           show_id: string | null;
           show_title: string | null;
           created_at: string;
@@ -371,6 +380,7 @@ export type Database = {
           track_title: string;
           submitter: string;
           submitter_email: string | null;
+          submitter_avatar_url: string | null;
           show_id: string | null;
           show_title: string | null;
           created_at: string;
@@ -436,6 +446,7 @@ export type Database = {
           genre: string;
           status: string;
           created_at: string;
+          avatar_url: string | null;
         }[];
       };
       get_latest_totn_winner: {
@@ -509,6 +520,7 @@ export type Database = {
           is_totn_nominated: boolean;
           is_totn_winner: boolean;
           nomination_votes: number;
+          avatar_url: string | null;
         }[];
       };
       get_show_queue_for_active_show: {
@@ -525,6 +537,7 @@ export type Database = {
           message: string | null;
           status: string;
           created_at: string;
+          avatar_url: string | null;
         }[];
       };
       get_unplayed_submissions_for_upcoming_show: {
@@ -540,6 +553,7 @@ export type Database = {
           rights_confirmed: boolean;
           status: string;
           created_at: string;
+          avatar_url: string | null;
         }[];
       };
       mark_submission_played: {
@@ -631,6 +645,13 @@ export type Database = {
       update_own_profile_display_name: {
         Args: {
           p_display_name: string;
+        };
+        Returns: Database["public"]["Tables"]["user_profiles"]["Row"];
+      };
+      update_own_profile_avatar: {
+        Args: {
+          p_avatar_url: string;
+          p_avatar_path: string;
         };
         Returns: Database["public"]["Tables"]["user_profiles"]["Row"];
       };

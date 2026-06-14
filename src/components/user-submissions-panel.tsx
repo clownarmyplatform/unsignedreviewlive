@@ -4,6 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useAuth } from "@/components/providers/auth-provider";
 import { SectionCard } from "@/components/ui/section-card";
 import { StatusPill } from "@/components/ui/status-pill";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 
@@ -75,7 +76,7 @@ function toEditState(submission: SubmissionRow): EditState {
 }
 
 export function UserSubmissionsPanel() {
-  const { user } = useAuth();
+  const { profile, user } = useAuth();
   const [submissions, setSubmissions] = useState<SubmissionRow[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editValues, setEditValues] = useState<EditState | null>(null);
@@ -240,13 +241,21 @@ export function UserSubmissionsPanel() {
                 className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-semibold text-white">
-                      {submission.artist_name} - {submission.track_title}
-                    </p>
-                    <p className="mt-1 text-sm text-zinc-400">
-                      {submission.genre} | {formatSubmissionDate(submission.created_at)}
-                    </p>
+                  <div className="flex items-start gap-3">
+                    <UserAvatar
+                      imageUrl={profile?.avatarUrl}
+                      name={submission.artist_name}
+                      className="h-11 w-11"
+                      textClassName="text-xs"
+                    />
+                    <div>
+                      <p className="font-semibold text-white">
+                        {submission.artist_name} - {submission.track_title}
+                      </p>
+                      <p className="mt-1 text-sm text-zinc-400">
+                        {submission.genre} | {formatSubmissionDate(submission.created_at)}
+                      </p>
+                    </div>
                   </div>
                   <StatusPill
                     tone={

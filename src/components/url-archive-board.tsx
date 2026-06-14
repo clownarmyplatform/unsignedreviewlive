@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useEffectEvent, useState } from "react";
 import { StatusPill } from "@/components/ui/status-pill";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 
@@ -275,16 +276,24 @@ export function UrlArchiveBoard() {
                       className="rounded-[18px] border border-white/10 bg-white/[0.03] p-4"
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                          <p className="text-sm uppercase tracking-[0.24em] text-zinc-500">
-                            Slot {index + 1}
-                          </p>
-                          <p className="mt-2 font-semibold text-white">
-                            {track.artist_name} - {track.track_title}
-                          </p>
-                          <p className="mt-1 text-sm leading-6 text-zinc-400">
-                            {track.genre} | {new Date(track.created_at).toLocaleString()}
-                          </p>
+                        <div className="flex items-start gap-3">
+                          <UserAvatar
+                            imageUrl={track.avatar_url}
+                            name={track.artist_name}
+                            className="h-11 w-11"
+                            textClassName="text-xs"
+                          />
+                          <div>
+                            <p className="text-sm uppercase tracking-[0.24em] text-zinc-500">
+                              Slot {index + 1}
+                            </p>
+                            <p className="mt-2 font-semibold text-white">
+                              {track.artist_name} - {track.track_title}
+                            </p>
+                            <p className="mt-1 text-sm leading-6 text-zinc-400">
+                              {track.genre} | {new Date(track.created_at).toLocaleString()}
+                            </p>
+                          </div>
                         </div>
                         <div className="flex flex-wrap gap-2">
                           <StatusPill tone={statusTone(track.status)}>

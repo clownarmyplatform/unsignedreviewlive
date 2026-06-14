@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Database } from "@/lib/supabase/types";
 import { StatusPill } from "@/components/ui/status-pill";
+import { UserAvatar } from "@/components/ui/user-avatar";
 
 type QueueRow =
   Database["public"]["Functions"]["get_show_queue_for_active_show"]["Returns"][number];
@@ -140,16 +141,24 @@ export function ShowQueueBoard() {
               className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
-                    Slot {index + 1}
-                  </p>
-                  <p className="mt-2 text-xl font-semibold text-white">
-                    {item.artist_name} - {item.track_title}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-zinc-400">
-                    {item.genre} | Submitted {new Date(item.created_at).toLocaleString()}
-                  </p>
+                <div className="flex items-start gap-3">
+                  <UserAvatar
+                    imageUrl={item.avatar_url}
+                    name={item.artist_name}
+                    className="h-12 w-12"
+                    textClassName="text-xs"
+                  />
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
+                      Slot {index + 1}
+                    </p>
+                    <p className="mt-2 text-xl font-semibold text-white">
+                      {item.artist_name} - {item.track_title}
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-zinc-400">
+                      {item.genre} | Submitted {new Date(item.created_at).toLocaleString()}
+                    </p>
+                  </div>
                 </div>
                 <StatusPill tone={queueStatusTone(item.status)}>
                   {formatQueueStatus(item.status)}

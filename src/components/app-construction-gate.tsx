@@ -9,13 +9,20 @@ const ACCESS_PASSPHRASE = "letmein";
 export function AppConstructionGate() {
   const [inputValue, setInputValue] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isReady, setIsReady] = useState(false);
+  const [gateState, setGateState] = useState<"unknown" | "locked" | "unlocked">(
+    "unknown",
+  );
 
   useEffect(() => {
-    const hasAccess = window.sessionStorage.getItem(CONSTRUCTION_GATE_KEY) === "open";
-    setIsUnlocked(hasAccess);
-    setIsReady(true);
+    const timer = window.setTimeout(() => {
+      const hasAccess =
+        window.sessionStorage.getItem(CONSTRUCTION_GATE_KEY) === "open";
+      setGateState(hasAccess ? "unlocked" : "locked");
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
   }, []);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -28,10 +35,10 @@ export function AppConstructionGate() {
 
     window.sessionStorage.setItem(CONSTRUCTION_GATE_KEY, "open");
     setErrorMessage(null);
-    setIsUnlocked(true);
+    setGateState("unlocked");
   }
 
-  if (!isReady || isUnlocked) {
+  if (gateState === "unknown" || gateState === "unlocked") {
     return null;
   }
 
