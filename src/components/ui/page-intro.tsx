@@ -1,7 +1,7 @@
 type PageIntroProps = {
   eyebrow: string;
   title: string;
-  description: string;
+  description?: string;
   actions?: React.ReactNode;
   badge?: string;
 };
@@ -30,9 +30,11 @@ export function PageIntro({
           <h1 className="font-display text-3xl uppercase leading-none tracking-[0.04em] text-white sm:text-4xl sm:tracking-[0.06em] lg:text-5xl">
             {title}
           </h1>
-          <p className="mt-3 text-sm leading-7 text-zinc-300 sm:text-base">
-            {description}
-          </p>
+          {description ? (
+            <p className="mt-3 text-sm leading-7 text-zinc-300 sm:text-base">
+              {description}
+            </p>
+          ) : null}
         </div>
         {actions ? <div className="flex flex-wrap gap-3">{actions}</div> : null}
       </div>
