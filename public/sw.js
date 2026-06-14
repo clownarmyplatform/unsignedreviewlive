@@ -1,5 +1,5 @@
-const STATIC_CACHE = "clown-army-static-v1";
-const RUNTIME_CACHE = "clown-army-runtime-v1";
+const STATIC_CACHE = "clown-army-static-v2";
+const RUNTIME_CACHE = "clown-army-runtime-v2";
 const CORE_ASSETS = [
   "/manifest.webmanifest",
   "/clown-army-logo.jpg",

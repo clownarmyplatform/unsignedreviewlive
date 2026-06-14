@@ -10,13 +10,64 @@ export function PwaBoot() {
   const [isFadingStartupSplash, setIsFadingStartupSplash] = useState(false);
 
   useEffect(() => {
+    let hasReloadedForUpdate = false;
+    let cleanupServiceWorkerListener: (() => void) | null = null;
+
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
         .register("/sw.js", {
           scope: "/",
           updateViaCache: "none",
         })
+        .then((registration) => {
+          const promptWaitingWorker = () => {
+            registration.waiting?.postMessage({
+              type: "SKIP_WAITING",
+            });
+          };
+
+          if (registration.waiting) {
+            promptWaitingWorker();
+          }
+
+          registration.addEventListener("updatefound", () => {
+            const installingWorker = registration.installing;
+
+            if (!installingWorker) {
+              return;
+            }
+
+            installingWorker.addEventListener("statechange", () => {
+              if (
+                installingWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
+                promptWaitingWorker();
+              }
+            });
+          });
+        })
         .catch(() => undefined);
+
+      const handleControllerChange = () => {
+        if (hasReloadedForUpdate) {
+          return;
+        }
+
+        hasReloadedForUpdate = true;
+        window.location.reload();
+      };
+
+      navigator.serviceWorker.addEventListener(
+        "controllerchange",
+        handleControllerChange,
+      );
+      cleanupServiceWorkerListener = () => {
+        navigator.serviceWorker.removeEventListener(
+          "controllerchange",
+          handleControllerChange,
+        );
+      };
     }
 
     const hasSeenSplash = window.sessionStorage.getItem(STARTUP_SPLASH_KEY) === "seen";
@@ -27,6 +78,7 @@ export function PwaBoot() {
       });
 
       return () => {
+        cleanupServiceWorkerListener?.();
         window.cancelAnimationFrame(hideTimer);
       };
     }
@@ -47,6 +99,7 @@ export function PwaBoot() {
     }, 4400);
 
     return () => {
+      cleanupServiceWorkerListener?.();
       window.clearTimeout(fadeTimer);
       window.clearTimeout(hideTimer);
     };
