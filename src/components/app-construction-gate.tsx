@@ -52,26 +52,11 @@ export function AppConstructionGate() {
         className="object-cover object-top sm:object-center"
       />
 
-      <div className="absolute inset-0 bg-black/72" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
-      <div className="relative z-10 flex min-h-screen w-full items-center justify-center px-4 py-6 sm:px-6 sm:py-8">
-        <div className="flex w-full max-w-md flex-col items-center justify-center rounded-[28px] border border-white/10 bg-black/55 px-5 py-6 text-center shadow-2xl shadow-black/60 backdrop-blur-[2px] sm:max-w-lg sm:px-7 sm:py-8">
-          <h1 className="font-display text-4xl uppercase tracking-[0.08em] text-white sm:text-5xl">
-            Under Construction
-          </h1>
-
-          <div className="mt-6 flex justify-center">
-            <Image
-              src="/clown-army-logo.jpg"
-              alt="Clown Army Studio logo"
-              width={160}
-              height={160}
-              className="h-24 w-24 rounded-[24px] border border-white/10 object-cover shadow-lg shadow-black/40 sm:h-32 sm:w-32"
-              priority
-            />
-          </div>
-
-          <form className="mt-8 w-full max-w-sm space-y-4" onSubmit={handleSubmit}>
+      <div className="relative z-10 flex min-h-screen w-full items-end justify-center px-4 py-5 sm:px-6 sm:py-6">
+        <div className="w-full max-w-md rounded-[24px] border border-white/10 bg-black/78 p-4 shadow-2xl shadow-black/70 backdrop-blur-[2px]">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block text-left">
               <span className="mb-2 block text-sm font-medium uppercase tracking-[0.14em] text-zinc-200">
                 Passphrase
