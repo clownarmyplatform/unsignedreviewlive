@@ -4,14 +4,14 @@ const sections = [
   {
     heading: "Last Updated: June 2026",
     paragraphs: [
-      "Welcome to Clown Army Studio.",
+      "Welcome to uniqueKontent.",
       "By creating an account, submitting content, or using this platform, you agree to these Terms of Service.",
     ],
   },
   {
     heading: "1. Purpose of the Platform",
     paragraphs: [
-      "Clown Army Studio exists to support independent artists, music creators, and the Clown Army community.",
+      "uniqueKontent exists to support independent artists, music creators, and the wider creator community.",
       "The platform provides tools for:",
     ],
     bullets: [
@@ -37,7 +37,7 @@ const sections = [
   {
     heading: "3. Drugs, Violence and Illegal Activity",
     paragraphs: [
-      "Clown Army Studio and the Clown Army community do not promote, encourage, organise, facilitate, or endorse:",
+      "uniqueKontent and its community do not promote, encourage, organise, facilitate, or endorse:",
       "Content may contain artistic themes, storytelling, satire, or creative expression. However, content that actively promotes or encourages illegal activity may be removed.",
     ],
     bullets: [
@@ -103,7 +103,7 @@ const sections = [
     heading: "8. Limitation of Liability",
     paragraphs: [
       "Use of the platform is at your own risk.",
-      "Clown Army Studio and its administrators are not liable for:",
+      "uniqueKontent and its administrators are not liable for:",
     ],
     bullets: [
       "Data loss.",
@@ -132,7 +132,7 @@ export default function TermsPage() {
     <LegalDocument
       eyebrow="Legal"
       title="Terms of Service"
-      intro="The rules and responsibilities for using Clown Army Studio."
+      intro="The rules and responsibilities for using uniqueKontent."
       sections={sections}
     />
   );

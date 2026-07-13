@@ -55,7 +55,7 @@ export function AppConstructionGate() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
       <div className="relative z-10 flex min-h-screen w-full items-end justify-center px-4 py-5 sm:px-6 sm:py-6">
-        <div className="w-full max-w-md rounded-[24px] border border-white/10 bg-black/78 p-4 shadow-2xl shadow-black/70 backdrop-blur-[2px]">
+        <div className="w-full max-w-md rounded-[24px] border border-white/10 bg-black/20 p-4 shadow-2xl shadow-black/60 backdrop-blur-[2px]">
           <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block text-left">
               <span className="mb-2 block text-sm font-medium uppercase tracking-[0.14em] text-zinc-200">

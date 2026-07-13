@@ -7,7 +7,7 @@ const sections = [
   {
     heading: "1. Overview",
     paragraphs: [
-      "Clown Army Studio respects your privacy.",
+      "uniqueKontent respects your privacy.",
       "This policy explains what information we collect, why we collect it, and how it is used.",
     ],
   },
@@ -132,7 +132,7 @@ export default function PrivacyPage() {
     <LegalDocument
       eyebrow="Legal"
       title="Privacy Policy"
-      intro="How Clown Army Studio collects, uses, and protects information."
+      intro="How uniqueKontent collects, uses, and protects information."
       sections={sections}
     />
   );

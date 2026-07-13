@@ -18,13 +18,13 @@ const displayFont = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Clown Army Studio",
+  title: "uniqueKontent",
   description: "Weekly music show submissions, queue control, and community updates.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black",
-    title: "CA Studio",
+    title: "uniqueKontent",
   },
   icons: {
     apple: "/apple-icon.png",

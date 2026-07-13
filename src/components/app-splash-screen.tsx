@@ -9,7 +9,7 @@ type AppSplashScreenProps = {
 
 export function AppSplashScreen({
   isFading = false,
-  message = "Loading Clown Army Studio...",
+  message = "Loading uniqueKontent...",
 }: AppSplashScreenProps) {
   const [imageFailed, setImageFailed] = useState(false);
 
@@ -24,7 +24,7 @@ export function AppSplashScreen({
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src="/assets/URLsplash.webp"
-            alt="Clown Army Studio loading animation"
+            alt="uniqueKontent loading animation"
             onError={() => setImageFailed(true)}
             className="h-full w-full object-cover"
           />

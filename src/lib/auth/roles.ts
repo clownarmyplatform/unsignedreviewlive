@@ -12,15 +12,15 @@ export const hostAccounts: HostAccount[] = [
   },
   {
     email: "newton_excessive@hotmail.co.uk",
-    label: "Clown Army Admin",
+    label: "uniqueKontent Admin",
   },
   {
     email: "clownarmyhost@gmail.com",
-    label: "Clown Army Host",
+    label: "uniqueKontent Host",
   },
   {
     email: "clownarmyplatform@gmail.com",
-    label: "Clown Army Platform",
+    label: "uniqueKontent Platform",
   },
 ];
 

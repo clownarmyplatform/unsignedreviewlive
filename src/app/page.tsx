@@ -10,8 +10,8 @@ export default function HomePage() {
   return (
     <div className="space-y-6">
       <PageIntro
-        eyebrow="Unsigned Review Live"
-        title="Home of the Clown Army"
+        eyebrow="uniqueKontent"
+        title="Welcome to uniqueKontent"
         description="Sign in or create an account to submit your track for review on our weekly show!"
         actions={<PublicHomeActions />}
       />

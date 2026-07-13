@@ -72,7 +72,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <Link href="/" className="shrink-0">
               <Image
                 src="/clown-army-logo.jpg"
-                alt="Clown Army logo"
+                alt="uniqueKontent logo"
                 width={96}
                 height={96}
                 className="h-16 w-16 rounded-2xl border border-white/10 object-cover shadow-lg shadow-black/40 sm:h-24 sm:w-24 sm:rounded-3xl"
@@ -184,13 +184,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             aria-hidden={isHeaderCollapsed}
           >
             <p className="text-xs uppercase tracking-[0.35em] text-amber-300/80">
-              Unsigned Review Live
+              uniqueKontent
             </p>
             <Link
               href="/"
               className="font-display text-2xl uppercase leading-none tracking-[0.06em] text-white sm:text-3xl sm:tracking-[0.08em]"
             >
-              Clown Army Studio
+              uniqueKontent
             </Link>
           </div>
 

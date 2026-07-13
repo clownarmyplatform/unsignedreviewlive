@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Clown Army Studio",
-    short_name: "CA Studio",
+    name: "uniqueKontent",
+    short_name: "uniqueKontent",
     description: "Weekly music show submissions, queue control, and community updates.",
     start_url: "/",
     display: "standalone",
