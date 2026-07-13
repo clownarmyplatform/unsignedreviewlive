@@ -1,10 +1,10 @@
-const STATIC_CACHE = "clown-army-static-v2";
-const RUNTIME_CACHE = "clown-army-runtime-v2";
+const STATIC_CACHE = "uniquekontent-static-v3";
+const RUNTIME_CACHE = "uniquekontent-runtime-v3";
 const CORE_ASSETS = [
   "/manifest.webmanifest",
-  "/clown-army-logo.jpg",
+  "/assets/UK_logo_optimized.webp",
   "/apple-icon.png",
-  "/assets/URLsplash.webp",
+  "/assets/ukplatform_splash_compressed.mp4",
   "/icons/icon-192.png",
   "/icons/icon-512.png",
 ];

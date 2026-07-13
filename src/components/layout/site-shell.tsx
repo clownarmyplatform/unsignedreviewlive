@@ -71,7 +71,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div className="relative flex items-start justify-between gap-3">
             <Link href="/" className="shrink-0">
               <Image
-                src="/clown-army-logo.jpg"
+                src="/assets/UK_logo_optimized.webp"
                 alt="uniqueKontent logo"
                 width={96}
                 height={96}

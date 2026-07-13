@@ -22,9 +22,9 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
       {
-        src: "/clown-army-logo.jpg",
-        sizes: "256x256",
-        type: "image/jpeg",
+        src: "/assets/UK_logo_optimized.webp",
+        sizes: "1536x1536",
+        type: "image/webp",
       },
     ],
   };
