@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
+        pathname: "/assets/UK_logo_optimized.webp",
+        search: "",
+      },
+      {
         pathname: "/assets/construction-gate-bg.png",
         search: "?v=2026-07-15",
       },
