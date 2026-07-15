@@ -58,12 +58,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   }, [pathname, setIsShowingIosInstructions]);
 
   return (
-    <div className="uk-shell-bg relative min-h-screen overflow-x-hidden text-zinc-50">
+    <div className="relative min-h-screen overflow-x-hidden text-zinc-50">
       <PwaBoot />
       <AppConstructionGate />
-      <div className="uk-grid-overlay pointer-events-none absolute inset-0 opacity-35" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,rgba(255,45,166,0.18),transparent_60%)] blur-3xl" />
-      <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3 pb-24 pt-3 sm:px-6 sm:pb-28 sm:pt-4 lg:px-8">
+      <div className="uk-shell-bg pointer-events-none fixed inset-0" />
+      <div className="uk-grid-overlay pointer-events-none fixed inset-0 opacity-35" />
+      <div className="pointer-events-none fixed inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,rgba(255,45,166,0.18),transparent_60%)] blur-3xl" />
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3 pb-24 pt-3 sm:px-6 sm:pb-28 sm:pt-4 lg:px-8">
         <header
           className={`uk-panel sticky top-0 z-40 mb-5 rounded-[24px] px-3 py-3 backdrop-blur transition-[padding,transform,background-color,border-radius] duration-300 sm:mb-6 sm:rounded-[28px] sm:px-6 sm:py-4 ${
             isHeaderCollapsed ? "translate-y-0 py-3" : ""
