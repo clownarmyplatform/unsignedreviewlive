@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    localPatterns: [
+      {
+        pathname: "/assets/construction-gate-bg.png",
+        search: "?v=2026-07-15",
+      },
+    ],
+  },
   async headers() {
     return [
       {
