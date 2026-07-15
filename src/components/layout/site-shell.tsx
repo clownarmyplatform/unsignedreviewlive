@@ -185,9 +185,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             }`}
             aria-hidden={isHeaderCollapsed}
           >
-            <p className="uk-eyebrow text-xs uppercase tracking-[0.35em]">
-              uniqueKontent
-            </p>
             <Link
               href="/"
               className="font-display text-2xl uppercase leading-none tracking-[0.06em] text-white sm:text-3xl sm:tracking-[0.08em]"

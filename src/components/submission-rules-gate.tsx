@@ -13,7 +13,6 @@ const rules = [
   "Any production workflow is welcome, including hardware and software.",
   "AI generated music is not permitted.",
   "Submitting a track does not guarantee it will be played.",
-  "The URL goes live every Tuesday at 7:30 PM, except when the URL is on tour; in that case, it will go live on a Saturday at 5 PM.",
   "Tracks must be submitted before show start on the date shown.",
   "No pre-listening to tracks in the thread. Save it for the night!",
   "Please make sure submitted links are working and accessible.",

@@ -76,6 +76,7 @@ export function getNavItemsForRole(role: AccountRole | null, isSignedIn: boolean
   if (role === "admin") {
     return [
       { href: "/", label: "Home" },
+      { href: "/dashboard", label: "Dashboard" },
       { href: "/admin", label: "Admin" },
       { href: "/noticeboard", label: "Notices" },
       { href: "/queue", label: "WEEKLY SUBMISSIONS" },
