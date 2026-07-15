@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const ASSET_VERSION = "2026-07-15";
+
 type AppSplashScreenProps = {
   isFading?: boolean;
   message?: string;
@@ -29,7 +31,10 @@ export function AppSplashScreen({
             onError={() => setVideoFailed(true)}
             className="h-full w-full object-cover"
           >
-            <source src="/assets/ukplatform_splash_compressed.mp4" type="video/mp4" />
+            <source
+              src={`/assets/ukplatform_splash_compressed.mp4?v=${ASSET_VERSION}`}
+              type="video/mp4"
+            />
           </video>
         ) : null}
 

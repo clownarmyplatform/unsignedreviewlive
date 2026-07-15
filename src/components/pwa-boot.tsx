@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AppSplashScreen } from "@/components/app-splash-screen";
 
-const STARTUP_SPLASH_KEY = "clown-army-startup-splash-seen";
+const STARTUP_SPLASH_KEY = "uniquekontent-startup-splash-seen";
 
 export function PwaBoot() {
   const [showStartupSplash, setShowStartupSplash] = useState(true);

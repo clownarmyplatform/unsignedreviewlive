@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { FormEvent, useEffect, useState } from "react";
 
-const CONSTRUCTION_GATE_KEY = "clown-army-construction-gate-open";
+const CONSTRUCTION_GATE_KEY = "uniquekontent-construction-gate-open";
 const ACCESS_PASSPHRASE = "ukplatform1";
+const ASSET_VERSION = "2026-07-15";
 
 export function AppConstructionGate() {
   const [inputValue, setInputValue] = useState("");
@@ -45,7 +46,7 @@ export function AppConstructionGate() {
   return (
     <div className="fixed inset-0 z-[190] min-h-screen w-screen overflow-hidden bg-black">
       <Image
-        src="/assets/construction-gate-bg.png"
+        src={`/assets/construction-gate-bg.png?v=${ASSET_VERSION}`}
         alt="Construction gate background"
         fill
         priority

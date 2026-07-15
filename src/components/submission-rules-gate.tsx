@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const REMEMBER_KEY = "acid-clowns-submit-rules-remembered";
-const SESSION_KEY = "acid-clowns-submit-rules-session";
+const REMEMBER_KEY = "uniquekontent-submit-rules-remembered";
+const SESSION_KEY = "uniquekontent-submit-rules-session";
 
 const rules = [
   "The track must be made by you.",

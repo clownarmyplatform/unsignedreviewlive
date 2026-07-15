@@ -1,5 +1,5 @@
-const STATIC_CACHE = "uniquekontent-static-v3";
-const RUNTIME_CACHE = "uniquekontent-runtime-v3";
+const STATIC_CACHE = "uniquekontent-static-v4";
+const RUNTIME_CACHE = "uniquekontent-runtime-v4";
 const CORE_ASSETS = [
   "/manifest.webmanifest",
   "/assets/UK_logo_optimized.webp",
