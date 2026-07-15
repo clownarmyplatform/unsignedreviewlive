@@ -272,7 +272,7 @@ export function AdminDashboardOverview({
         featured: false,
       },
       {
-        label: "The Acid Clowns Studio",
+        label: "The Streaming Room",
         value: `Show Starts in: ${formatShowCountdown(snapshot.show_date)}`,
         tone: snapshot.unplayed_count > 0 ? "warning" : "neutral",
         href: "/admin/unplayed-tracks",
@@ -393,7 +393,7 @@ export function AdminDashboardOverview({
   }
 
   return (
-    <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4">
+    <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
       <PanelSearchInput
         label="Search upcoming shows"
         placeholder="Search by title, episode number, date, or status"
@@ -412,7 +412,7 @@ export function AdminDashboardOverview({
       {!hasLoaded ? (
         <p className="mt-4 text-sm leading-6 text-zinc-300">Loading upcoming show...</p>
       ) : isSearchingShows ? (
-        <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300">
+        <div className="mt-4 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 text-sm leading-6 text-zinc-300">
           Searching upcoming shows...
         </div>
       ) : showsError ? (
@@ -428,7 +428,7 @@ export function AdminDashboardOverview({
             return (
               <div
                 key={show.id}
-                className="rounded-[24px] border border-white/10 bg-black/20 p-4"
+                className="rounded-[24px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4"
               >
                 <div>
                   <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
@@ -458,14 +458,14 @@ export function AdminDashboardOverview({
                       syncForm(show);
                       setEditingShowId(show.id);
                     }}
-                    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                    className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
                   >
                     {isEditingCard ? "Cancel Edit" : "Edit Show"}
                   </button>
                   {show.venue ? (
                     <Link
                       href={`/show/live?src=${encodeURIComponent(show.venue)}&title=${encodeURIComponent(show.title)}`}
-                      className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                      className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
                     >
                       View Show
                     </Link>
@@ -486,7 +486,7 @@ export function AdminDashboardOverview({
                       </div>
                     ) : null}
 
-                    <div className="mt-4 grid gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 md:grid-cols-2">
+                    <div className="mt-4 grid gap-4 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 md:grid-cols-2">
                       <label className="block md:col-span-2">
                         <span className="mb-2 block text-sm font-medium text-zinc-200">
                           Show title
@@ -494,7 +494,7 @@ export function AdminDashboardOverview({
                         <input
                           value={title}
                           onChange={(event) => setTitle(event.target.value)}
-                          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                          className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                         />
                       </label>
 
@@ -506,7 +506,7 @@ export function AdminDashboardOverview({
                           type="date"
                           value={showDate}
                           onChange={(event) => setShowDate(event.target.value)}
-                          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                          className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                         />
                       </label>
 
@@ -518,7 +518,7 @@ export function AdminDashboardOverview({
                           type="time"
                           value={startTime}
                           onChange={(event) => setStartTime(event.target.value)}
-                          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                          className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                         />
                       </label>
 
@@ -530,7 +530,7 @@ export function AdminDashboardOverview({
                           type="time"
                           value={endTime}
                           onChange={(event) => setEndTime(event.target.value)}
-                          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                          className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                         />
                       </label>
 
@@ -541,7 +541,7 @@ export function AdminDashboardOverview({
                         <input
                           value={theme}
                           onChange={(event) => setTheme(event.target.value)}
-                          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                          className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                         />
                       </label>
 
@@ -552,7 +552,7 @@ export function AdminDashboardOverview({
                         <input
                           value={venue}
                           onChange={(event) => setVenue(event.target.value)}
-                          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                          className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                         />
                       </label>
 
@@ -561,7 +561,7 @@ export function AdminDashboardOverview({
                           type="button"
                           disabled={isPending}
                           onClick={handleSaveShow}
-                          className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+                          className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
                         >
                           {isPending ? "Saving..." : "Save Changes"}
                         </button>
@@ -570,7 +570,7 @@ export function AdminDashboardOverview({
                   </>
                 ) : null}
 
-                <details className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <details className="mt-4 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
                   <summary className="cursor-pointer list-none text-sm font-semibold uppercase tracking-[0.24em] text-zinc-300">
                     Schedule
                   </summary>
@@ -580,7 +580,7 @@ export function AdminDashboardOverview({
                   </div>
                 </details>
 
-                <details className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                <details className="mt-4 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
                   <summary className="cursor-pointer list-none text-sm font-semibold uppercase tracking-[0.24em] text-zinc-300">
                     {isActiveCard ? "Submission Window" : "Queued Details"}
                   </summary>

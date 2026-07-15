@@ -385,7 +385,7 @@ export function AdminModerationPanel() {
         </div>
       ) : null}
 
-      <details className="group rounded-[24px] border border-white/10 bg-white/[0.03] p-5" open>
+      <details className="group rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5" open>
         <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
@@ -413,7 +413,7 @@ export function AdminModerationPanel() {
                 Type at least {MIN_GLOBAL_SEARCH_QUERY_LENGTH} characters to search users.
               </div>
             ) : isUsersLoading ? (
-              <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 text-sm leading-6 text-zinc-300">
+              <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4 text-sm leading-6 text-zinc-300">
                 Loading users...
               </div>
             ) : usersError ? (
@@ -427,7 +427,7 @@ export function AdminModerationPanel() {
                 return (
                   <div
                     key={account.auth_user_id}
-                    className="rounded-[22px] border border-white/10 bg-black/20 p-4"
+                    className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4"
                   >
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                       <div className="flex items-start gap-3">
@@ -501,7 +501,7 @@ export function AdminModerationPanel() {
         </div>
       </details>
 
-      <details className="group rounded-[24px] border border-white/10 bg-white/[0.03] p-5" open>
+      <details className="group rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5" open>
         <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
@@ -530,7 +530,7 @@ export function AdminModerationPanel() {
                 submissions.
               </div>
             ) : isSubmissionsLoading ? (
-              <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 text-sm leading-6 text-zinc-300">
+              <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4 text-sm leading-6 text-zinc-300">
                 Loading submissions...
               </div>
             ) : submissionsError ? (
@@ -541,7 +541,7 @@ export function AdminModerationPanel() {
               submissions.map((submission) => (
                 <div
                   key={submission.submission_id}
-                  className="rounded-[22px] border border-white/10 bg-black/20 p-4"
+                  className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4"
                 >
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div className="flex items-start gap-3">
@@ -598,7 +598,7 @@ export function AdminModerationPanel() {
                         onClick={() =>
                           handleSubmissionModeration(submission.submission_id, "rejected")
                         }
-                        className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         Reject Submission
                       </button>
@@ -627,7 +627,7 @@ export function AdminModerationPanel() {
         </div>
       </details>
 
-      <details className="group rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+      <details className="group rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5">
         <summary className="flex cursor-pointer list-none items-start justify-between gap-3">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
@@ -642,7 +642,7 @@ export function AdminModerationPanel() {
 
         <div className="mt-4 space-y-4">
           {isAuditLoading ? (
-            <div className="rounded-[22px] border border-white/10 bg-black/20 p-4 text-sm leading-6 text-zinc-300">
+            <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4 text-sm leading-6 text-zinc-300">
               Loading moderation audit trail...
             </div>
           ) : auditError ? (
@@ -654,7 +654,7 @@ export function AdminModerationPanel() {
               {auditLog.map((entry) => (
                 <div
                   key={entry.id}
-                  className="rounded-[22px] border border-white/10 bg-black/20 p-4"
+                  className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4"
                 >
                   <div className="flex flex-wrap gap-2">
                     <StatusPill tone="neutral">

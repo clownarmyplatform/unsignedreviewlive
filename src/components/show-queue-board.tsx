@@ -98,7 +98,7 @@ export function ShowQueueBoard() {
 
   if (isLoading) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         Loading the live show queue...
       </div>
     );
@@ -127,18 +127,18 @@ export function ShowQueueBoard() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5">
         <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">Active Show</p>
         <p className="mt-2 text-2xl font-semibold text-white">{showTitle}</p>
         <p className="mt-2 text-sm leading-6 text-zinc-300">{showDate}</p>
       </div>
 
-      <div className="max-h-[29rem] overflow-y-auto rounded-[24px] border border-white/10 bg-black/20 p-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10 hover:scrollbar-thumb-white/15 sm:p-4">
+      <div className="max-h-[29rem] overflow-y-auto rounded-[24px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10 hover:scrollbar-thumb-white/15 sm:p-4">
         <div className="grid gap-4">
           {queue.map((item, index) => (
             <article
               key={item.submission_id}
-              className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
+              className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex items-start gap-3">

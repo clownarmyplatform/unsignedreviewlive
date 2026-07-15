@@ -83,7 +83,7 @@ export function PublicHomeShowPanel() {
 
   if (isLoading) {
     return (
-      <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+      <div className="space-y-4 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 sm:p-5">
         <StatusPill tone="neutral">Loading</StatusPill>
         <p className="break-words text-zinc-300">
           Checking upcoming show and new submissions...
@@ -116,7 +116,7 @@ export function PublicHomeShowPanel() {
   const scheduledLabel = formatShowStart(snapshot.show_date);
 
   return (
-    <div className="space-y-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+    <div className="space-y-4 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 sm:p-5">
       <div className="flex flex-wrap gap-2">
         <StatusPill tone="accent">Upcoming Show</StatusPill>
         <StatusPill tone={snapshot.places_left > 0 ? "success" : "warning"}>
@@ -146,7 +146,7 @@ export function PublicHomeShowPanel() {
       <div className="flex flex-col items-end gap-3">
         <Link
           href="/submit"
-          className="inline-flex min-h-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+          className="inline-flex min-h-10 items-center justify-center rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
         >
           Submit Track
         </Link>
@@ -154,18 +154,18 @@ export function PublicHomeShowPanel() {
         {snapshot.venue && isLiveWindow ? (
           <Link
             href={`/show/live?src=${encodeURIComponent(snapshot.venue)}&title=${encodeURIComponent(snapshot.show_title ?? "Live Show")}`}
-            className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-amber-300 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-black transition hover:bg-amber-200 sm:w-auto sm:px-5 sm:tracking-[0.12em]"
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-white transition hover:brightness-110 sm:w-auto sm:px-5 sm:tracking-[0.12em]"
           >
             VIEW LIVE SHOW
           </Link>
         ) : (
-          <span className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-amber-300/30 bg-amber-300/10 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-amber-100 sm:w-auto sm:px-5 sm:tracking-[0.12em]">
+          <span className="inline-flex min-h-12 w-full items-center justify-center rounded-2xl border border-fuchsia-400/30 bg-fuchsia-500/10 px-4 py-3 text-center text-sm font-bold uppercase tracking-[0.08em] text-fuchsia-100 sm:w-auto sm:px-5 sm:tracking-[0.12em]">
             VIEW SHOW HERE AT {scheduledLabel}
           </span>
         )}
       </div>
 
-      <details className="group rounded-2xl border border-white/10 bg-black/20 p-4">
+      <details className="group rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-white">
           <div className="min-w-0">
             <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
@@ -187,7 +187,7 @@ export function PublicHomeShowPanel() {
             submissions.map((submission) => (
               <div
                 key={submission.id}
-                className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3"
+                className="flex items-start gap-3 rounded-xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-3"
               >
                 <UserAvatar
                   imageUrl={submission.avatar_url}

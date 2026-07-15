@@ -1,7 +1,8 @@
 const toneClasses = {
-  accent: "bg-amber-300/15 text-amber-200 border-amber-300/20",
+  accent:
+    "border-fuchsia-400/25 bg-[linear-gradient(90deg,rgba(255,45,166,0.18),rgba(142,66,255,0.18),rgba(29,183,255,0.18))] text-fuchsia-100",
   warning: "bg-rose-400/15 text-rose-200 border-rose-400/20",
-  neutral: "bg-white/8 text-zinc-200 border-white/10",
+  neutral: "border-violet-400/15 bg-[rgba(20,15,36,0.72)] text-zinc-200",
   success: "bg-emerald-400/15 text-emerald-200 border-emerald-400/20",
 } as const;
 

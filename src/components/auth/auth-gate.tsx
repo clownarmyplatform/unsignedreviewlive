@@ -32,7 +32,7 @@ export function AuthGate({
 
   if (isLoading) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         Checking account access...
       </div>
     );
@@ -40,9 +40,9 @@ export function AuthGate({
 
   if (!user) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         Account access is required here. Head to{" "}
-        <Link href="/account" className="text-amber-300 underline underline-offset-4">
+        <Link href="/account" className="text-fuchsia-500 underline underline-offset-4">
           Account
         </Link>{" "}
         to sign in or create a user.
@@ -52,7 +52,7 @@ export function AuthGate({
 
   if (allowAdminOnly && !isAdmin) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         This area is reserved for the host/admin account.
       </div>
     );

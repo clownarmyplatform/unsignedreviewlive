@@ -63,7 +63,7 @@ export function DashboardActions() {
   return (
     <>
       {hasSubmission ? (
-        <span className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-amber-300/30 bg-amber-300/10 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-amber-100">
+        <span className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-fuchsia-400/30 bg-fuchsia-500/10 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-fuchsia-100">
           Track Submitted
         </span>
       ) : (

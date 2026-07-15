@@ -14,20 +14,20 @@ export function StatCard({
   featured?: boolean;
 }) {
   const toneClasses = featured
-    ? "border-white/20 bg-white/[0.09]"
+    ? "border-fuchsia-400/22 bg-[linear-gradient(180deg,rgba(38,25,70,0.86),rgba(13,12,30,0.86))] shadow-[0_18px_40px_rgba(142,66,255,0.16)]"
     : tone === "accent"
-      ? "border-amber-300/20 bg-amber-300/[0.06]"
+      ? "border-fuchsia-400/20 bg-[linear-gradient(180deg,rgba(255,45,166,0.12),rgba(142,66,255,0.08))]"
       : tone === "success"
         ? "border-emerald-300/15 bg-emerald-300/[0.04]"
-        : tone === "warning"
-          ? "border-rose-200/12 bg-white/[0.05]"
-          : "border-white/10 bg-white/[0.04]";
+      : tone === "warning"
+          ? "border-rose-200/12 bg-[rgba(31,18,39,0.78)]"
+          : "border-violet-400/15 bg-[rgba(20,15,36,0.74)]";
 
   const content = (
     <div
       className={`flex min-h-[10.5rem] flex-col justify-between rounded-[24px] border p-4 ${toneClasses}`}
     >
-      <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">{label}</p>
+      <p className="text-xs uppercase tracking-[0.28em] text-zinc-400">{label}</p>
       <p className="mt-4 text-3xl font-bold leading-tight text-white">{value}</p>
     </div>
   );

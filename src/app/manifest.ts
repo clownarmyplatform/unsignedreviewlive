@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Weekly music show submissions, queue control, and community updates.",
     start_url: "/",
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#000000",
+    background_color: "#090412",
+    theme_color: "#090412",
     orientation: "portrait",
     icons: [
       {

@@ -158,7 +158,7 @@ export function AdminCreateShowPanel() {
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               placeholder="Optional. Leave blank to auto-generate."
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -170,7 +170,7 @@ export function AdminCreateShowPanel() {
               type="date"
               value={showDate}
               onChange={(event) => setShowDate(event.target.value)}
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -182,7 +182,7 @@ export function AdminCreateShowPanel() {
               type="time"
               value={startTime}
               onChange={(event) => setStartTime(event.target.value)}
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -194,7 +194,7 @@ export function AdminCreateShowPanel() {
               type="time"
               value={endTime}
               onChange={(event) => setEndTime(event.target.value)}
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -206,7 +206,7 @@ export function AdminCreateShowPanel() {
               value={theme}
               onChange={(event) => setTheme(event.target.value)}
               placeholder="Optional"
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -218,12 +218,12 @@ export function AdminCreateShowPanel() {
               value={venue}
               onChange={(event) => setVenue(event.target.value)}
               placeholder="Optional link or stream URL"
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-zinc-300">
+        <div className="rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] px-4 py-3 text-sm leading-6 text-zinc-300">
           Default schedule is the next Tuesday from 19:30 to 22:00. Supabase
           already creates a unique UUID for every show, and submissions attach to
           that show ID automatically. Supported media venue links such as YouTube are
@@ -245,14 +245,14 @@ export function AdminCreateShowPanel() {
         <button
           type="submit"
           disabled={isPending}
-          className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+          className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isPending ? "Creating..." : "Create Show"}
         </button>
       </form>
 
       <div className="space-y-4">
-        <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4">
+        <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
           <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
             Current Submission Target
           </p>
@@ -270,7 +270,7 @@ export function AdminCreateShowPanel() {
           )}
         </div>
 
-        <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4">
+        <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
           <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
             Latest Created Show
           </p>

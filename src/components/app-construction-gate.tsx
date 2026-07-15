@@ -53,13 +53,13 @@ export function AppConstructionGate() {
         className="object-cover object-top sm:object-center"
       />
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(6,3,14,0.08),rgba(6,3,14,0.7)_68%,rgba(6,3,14,0.92)_100%)]" />
 
       <div className="relative z-10 flex min-h-screen w-full items-end justify-center px-4 py-5 sm:px-6 sm:py-6">
-        <div className="w-full max-w-md rounded-[24px] border border-white/10 bg-black/20 p-4 shadow-2xl shadow-black/60 backdrop-blur-[2px]">
+        <div className="uk-panel w-full max-w-md rounded-[24px] p-4 backdrop-blur-[2px]">
           <form className="space-y-4" onSubmit={handleSubmit}>
             <label className="block text-left">
-              <span className="mb-2 block text-sm font-medium uppercase tracking-[0.14em] text-zinc-200">
+              <span className="uk-eyebrow mb-2 block text-sm font-medium uppercase tracking-[0.14em]">
                 Passphrase
               </span>
               <input
@@ -72,7 +72,7 @@ export function AppConstructionGate() {
                   }
                 }}
                 autoComplete="off"
-                className="min-h-12 w-full rounded-2xl border border-white/10 bg-black/55 px-4 text-white outline-none transition focus:border-amber-300/50"
+                className="uk-input min-h-12 w-full rounded-2xl px-4 text-white outline-none transition"
               />
             </label>
 
@@ -84,7 +84,7 @@ export function AppConstructionGate() {
 
             <button
               type="submit"
-              className="min-h-12 w-full rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-black transition hover:bg-amber-200"
+              className="uk-button-primary min-h-12 w-full rounded-2xl px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition"
             >
               Enter
             </button>

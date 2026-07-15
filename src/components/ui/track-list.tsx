@@ -19,7 +19,7 @@ export function TrackList({
       {items.map((item) => (
         <div
           key={item.id}
-          className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4"
+          className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4"
         >
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>

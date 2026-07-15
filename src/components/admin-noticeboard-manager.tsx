@@ -427,7 +427,7 @@ export function AdminNoticeboardManager() {
   return (
     <div className="space-y-6">
       <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-4 rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+        <div className="space-y-4 rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
               <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
@@ -441,7 +441,7 @@ export function AdminNoticeboardManager() {
               <button
                 type="button"
                 onClick={() => resetForm()}
-                className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
               >
                 Cancel Edit
               </button>
@@ -455,7 +455,7 @@ export function AdminNoticeboardManager() {
               onChange={(event) =>
                 setForm((current) => ({ ...current, title: event.target.value }))
               }
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -466,7 +466,7 @@ export function AdminNoticeboardManager() {
               onChange={(event) =>
                 setForm((current) => ({ ...current, tag: event.target.value }))
               }
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
 
@@ -476,7 +476,7 @@ export function AdminNoticeboardManager() {
                 key={action.label}
                 type="button"
                 onClick={() => handleFormattingInsert(action.syntax)}
-                className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-white/10"
+                className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-white/10"
               >
                 {action.label}
               </button>
@@ -494,7 +494,7 @@ export function AdminNoticeboardManager() {
               onChange={(event) =>
                 setForm((current) => ({ ...current, body: event.target.value }))
               }
-              className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white outline-none transition focus:border-amber-300/60"
+              className="w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 py-3 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
               placeholder="Write your post here. Markdown formatting is supported."
             />
           </label>
@@ -507,7 +507,7 @@ export function AdminNoticeboardManager() {
               type="file"
               accept="image/png,image/jpeg,image/webp,image/gif"
               onChange={handleImageChange}
-              className="block w-full text-sm text-zinc-300 file:mr-4 file:rounded-2xl file:border-0 file:bg-amber-300 file:px-4 file:py-2 file:font-semibold file:text-black hover:file:bg-amber-200"
+              className="block w-full text-sm text-zinc-300 file:mr-4 file:rounded-2xl file:border-0 file:bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] file:px-4 file:py-2 file:font-semibold file:text-white hover:file:brightness-110"
             />
             <p className="mt-2 text-sm leading-6 text-zinc-400">
               Optional. Max image size is 2MB.
@@ -525,7 +525,7 @@ export function AdminNoticeboardManager() {
                   image_path: null,
                 }));
               }}
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+              className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               Remove Current Image
             </button>
@@ -547,7 +547,7 @@ export function AdminNoticeboardManager() {
             type="button"
             onClick={handleSubmit}
             disabled={isPending}
-            className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+            className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isPending
               ? editingPostId
@@ -559,7 +559,7 @@ export function AdminNoticeboardManager() {
           </button>
         </div>
 
-        <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+        <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5">
           <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">Preview</p>
           <p className="mt-2 text-xl font-semibold text-white">
             {form.title || "Noticeboard preview"}
@@ -599,7 +599,7 @@ export function AdminNoticeboardManager() {
           </div>
         ) : null}
         {isLoading ? (
-          <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+          <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
             Loading noticeboard posts...
           </div>
         ) : searchError ? (
@@ -607,14 +607,14 @@ export function AdminNoticeboardManager() {
             {searchError}
           </div>
         ) : isSearchingPosts ? (
-          <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+          <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
             Searching noticeboard posts...
           </div>
         ) : posts.length > 0 ? (
           posts.map((post) => (
             <article
               key={post.id}
-              className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
+              className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5"
             >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div>
@@ -630,7 +630,7 @@ export function AdminNoticeboardManager() {
                   <button
                     type="button"
                     onClick={() => startEditing(post)}
-                    className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                    className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
                   >
                     Edit
                   </button>

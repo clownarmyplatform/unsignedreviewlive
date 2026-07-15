@@ -15,7 +15,7 @@ export function PanelSearchInput({
     <div>
       <label
         htmlFor={label}
-        className="mb-2 block text-xs uppercase tracking-[0.28em] text-zinc-500"
+        className="uk-eyebrow mb-2 block text-xs uppercase tracking-[0.28em]"
       >
         {label}
       </label>
@@ -26,7 +26,7 @@ export function PanelSearchInput({
           value={value}
           onChange={(event) => onChange(event.target.value)}
           placeholder={placeholder}
-          className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-12 pr-12 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60"
+          className="uk-input min-h-12 w-full rounded-2xl px-12 pr-12 text-sm text-white outline-none transition placeholder:text-zinc-500"
         />
         <svg
           aria-hidden="true"

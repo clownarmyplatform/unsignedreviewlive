@@ -17,12 +17,12 @@ export default async function LiveShowPage({
   if (!src) {
     return (
       <div className="space-y-6">
-        <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5">
+        <div className="rounded-[28px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] p-5">
           <p className="text-sm text-zinc-300">No live show link was provided.</p>
           <div className="mt-4">
             <Link
               href="/"
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200"
+              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
             >
               Back Home
             </Link>
@@ -34,10 +34,10 @@ export default async function LiveShowPage({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5">
+      <section className="rounded-[28px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-amber-300/85">
+            <p className="text-xs uppercase tracking-[0.35em] text-fuchsia-300/85">
               Live Show
             </p>
             <h1 className="mt-2 font-display text-4xl uppercase leading-none tracking-[0.06em] text-white sm:text-5xl">
@@ -49,13 +49,13 @@ export default async function LiveShowPage({
               href={src}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+              className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
             >
               Open External
             </a>
             <Link
               href="/"
-              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200"
+              className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
             >
               Back Home
             </Link>

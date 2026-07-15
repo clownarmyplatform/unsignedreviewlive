@@ -220,7 +220,7 @@ export function UserSubmissionsPanel() {
       description="One track per show. If you make a mistake, you can edit your submission here without changing its place in line."
     >
       {isLoading ? (
-        <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300">
+        <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 text-sm leading-6 text-zinc-300">
           Loading your live submissions...
         </div>
       ) : errorMessage ? (
@@ -238,7 +238,7 @@ export function UserSubmissionsPanel() {
             return (
               <div
                 key={submission.id}
-                className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4"
+                className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
@@ -284,12 +284,12 @@ export function UserSubmissionsPanel() {
                       <button
                         type="button"
                         onClick={() => startEditing(submission)}
-                        className="min-h-12 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+                        className="min-h-12 rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
                       >
                         Edit Submission
                       </button>
                     ) : (
-                      <div className="space-y-4 rounded-[22px] border border-white/10 bg-black/20 p-4">
+                      <div className="space-y-4 rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4">
                         <div className="grid gap-4 md:grid-cols-2">
                           <label className="block">
                             <span className="mb-2 block text-sm font-medium text-zinc-200">
@@ -300,7 +300,7 @@ export function UserSubmissionsPanel() {
                               onChange={(event) =>
                                 updateEditValue("artist_name", event.target.value)
                               }
-                              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                             />
                           </label>
 
@@ -313,7 +313,7 @@ export function UserSubmissionsPanel() {
                               onChange={(event) =>
                                 updateEditValue("track_title", event.target.value)
                               }
-                              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                             />
                           </label>
 
@@ -327,7 +327,7 @@ export function UserSubmissionsPanel() {
                               onChange={(event) =>
                                 updateEditValue("track_url", event.target.value)
                               }
-                              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                             />
                           </label>
 
@@ -340,7 +340,7 @@ export function UserSubmissionsPanel() {
                               onChange={(event) =>
                                 updateEditValue("genre", event.target.value)
                               }
-                              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                             />
                           </label>
                         </div>
@@ -355,11 +355,11 @@ export function UserSubmissionsPanel() {
                             onChange={(event) =>
                               updateEditValue("message", event.target.value)
                             }
-                            className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white outline-none transition focus:border-amber-300/60"
+                            className="w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 py-3 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                           />
                         </label>
 
-                        <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+                        <label className="flex items-start gap-3 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
                           <input
                             type="checkbox"
                             checked={editValues.rights_confirmed}
@@ -369,7 +369,7 @@ export function UserSubmissionsPanel() {
                                 event.target.checked,
                               )
                             }
-                            className="mt-1 h-5 w-5 rounded border-white/10 bg-transparent accent-amber-300"
+                            className="mt-1 h-5 w-5 rounded border-white/10 bg-transparent accent-fuchsia-500"
                           />
                           <span className="text-sm leading-6 text-zinc-300">
                             I still confirm that I own this track or have the rights
@@ -394,7 +394,7 @@ export function UserSubmissionsPanel() {
                             type="button"
                             onClick={() => handleEditSubmit(submission.id)}
                             disabled={isPending}
-                            className="min-h-12 rounded-2xl bg-amber-300 px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+                            className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
                           >
                             {isPending ? "Saving..." : "Save Changes"}
                           </button>
@@ -402,7 +402,7 @@ export function UserSubmissionsPanel() {
                             type="button"
                             onClick={stopEditing}
                             disabled={isPending}
-                            className="min-h-12 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
+                            className="min-h-12 rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
                           >
                             Cancel
                           </button>

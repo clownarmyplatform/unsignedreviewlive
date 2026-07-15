@@ -525,7 +525,7 @@ export function AccountSpace() {
               <StatusPill tone={isAdmin ? "accent" : "success"}>
                 {isAdmin ? "Admin / Host" : "Signed In"}
               </StatusPill>
-              <div className="flex items-center gap-4 rounded-[22px] border border-white/10 bg-white/[0.03] p-4">
+              <div className="flex items-center gap-4 rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
                 <UserAvatar
                   imageUrl={avatarPreviewUrl ?? currentAvatarUrl}
                   name={currentDisplayName ?? user.email ?? "User"}
@@ -543,7 +543,7 @@ export function AccountSpace() {
                   )}
                 </div>
               </div>
-              <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-7 text-zinc-300">
+              <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 text-sm leading-7 text-zinc-300">
                 <p>Email: {user.email}</p>
                 <p>Name: {currentDisplayName ?? "Not set"}</p>
                 <p>Account type: {isAdmin ? "Host / Admin" : "User"}</p>
@@ -552,7 +552,7 @@ export function AccountSpace() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                className="min-h-12 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+                className="min-h-12 rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
               >
                 Sign Out
               </button>
@@ -571,7 +571,7 @@ export function AccountSpace() {
           >
             <form className="space-y-4" onSubmit={handleAccountUpdate}>
               {isRecoveryMode ? (
-                <div className="rounded-2xl border border-amber-300/30 bg-amber-300/10 px-4 py-3 text-sm leading-6 text-amber-100">
+                <div className="rounded-2xl border border-fuchsia-400/30 bg-fuchsia-500/10 px-4 py-3 text-sm leading-6 text-fuchsia-100">
                   Password recovery is active. Add a new password below to complete the reset.
                 </div>
               ) : null}
@@ -583,11 +583,11 @@ export function AccountSpace() {
                 <input
                   name="display_name"
                   defaultValue={currentDisplayName ?? ""}
-                  className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                  className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                 />
               </label>
 
-              <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+              <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4">
                 <p className="text-sm font-medium text-zinc-200">Profile picture</p>
                 <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <UserAvatar
@@ -601,7 +601,7 @@ export function AccountSpace() {
                       type="file"
                       accept="image/jpeg,image/png,image/webp"
                       onChange={handleAvatarSelection}
-                      className="block w-full text-sm text-zinc-300 file:mr-4 file:rounded-2xl file:border-0 file:bg-amber-300 file:px-4 file:py-2 file:font-semibold file:text-black hover:file:bg-amber-200"
+                      className="block w-full text-sm text-zinc-300 file:mr-4 file:rounded-2xl file:border-0 file:bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] file:px-4 file:py-2 file:font-semibold file:text-white hover:file:brightness-110"
                     />
                     <p className="mt-2 text-sm leading-6 text-zinc-400">
                       JPG, PNG, or WebP. Max 5MB before processing.
@@ -613,7 +613,7 @@ export function AccountSpace() {
                   type="button"
                   onClick={handleAvatarUpload}
                   disabled={isAvatarPending || !avatarBlob}
-                  className="mt-4 min-h-12 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="mt-4 min-h-12 rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {isAvatarPending ? "Uploading..." : "Save Profile Picture"}
                 </button>
@@ -626,7 +626,7 @@ export function AccountSpace() {
                 <input
                   name="new_password"
                   type="password"
-                  className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                  className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                 />
               </label>
 
@@ -657,7 +657,7 @@ export function AccountSpace() {
               <button
                 type="submit"
                 disabled={isSettingsPending}
-                className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+                className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isSettingsPending
                   ? "Saving..."
@@ -680,7 +680,7 @@ export function AccountSpace() {
                 <input
                   value={deleteConfirmation}
                   onChange={(event) => setDeleteConfirmation(event.target.value)}
-                  className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-rose-400/60"
+                  className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-rose-400/60"
                 />
               </label>
 
@@ -736,8 +736,8 @@ export function AccountSpace() {
               onClick={() => setMode("sign-in")}
               className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${
                 mode === "sign-in"
-                  ? "bg-amber-300 text-black"
-                  : "border border-white/10 bg-white/5 text-white"
+                  ? "bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] text-white"
+                  : "border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] text-white"
               }`}
             >
               Sign In
@@ -747,8 +747,8 @@ export function AccountSpace() {
               onClick={() => setMode("sign-up")}
               className={`rounded-2xl px-4 py-2 text-sm font-semibold transition ${
                 mode === "sign-up"
-                  ? "bg-amber-300 text-black"
-                  : "border border-white/10 bg-white/5 text-white"
+                  ? "bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] text-white"
+                  : "border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] text-white"
               }`}
             >
               Create User
@@ -765,7 +765,7 @@ export function AccountSpace() {
                   required
                   value={displayName}
                   onChange={(event) => setDisplayName(event.target.value)}
-                  className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                  className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
                 />
               </label>
             ) : null}
@@ -779,7 +779,7 @@ export function AccountSpace() {
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
               />
             </label>
 
@@ -792,7 +792,7 @@ export function AccountSpace() {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition focus:border-amber-300/60"
+                className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
               />
             </label>
 
@@ -811,7 +811,7 @@ export function AccountSpace() {
             <button
               type="submit"
               disabled={isPending}
-              className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+              className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isPending
                 ? "Working..."
@@ -825,7 +825,7 @@ export function AccountSpace() {
                 type="button"
                 onClick={handleForgotPassword}
                 disabled={isPending}
-                className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
+                className="min-h-12 w-full rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 Forgot Password
               </button>

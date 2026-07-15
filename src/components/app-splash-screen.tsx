@@ -17,11 +17,11 @@ export function AppSplashScreen({
 
   return (
     <div
-      className={`fixed inset-0 z-[200] flex h-screen w-screen items-center justify-center bg-black transition-opacity duration-400 ${
+      className={`fixed inset-0 z-[200] flex h-screen w-screen items-center justify-center bg-[#06030e] transition-opacity duration-400 ${
         isFading ? "opacity-0" : "opacity-100"
       }`}
     >
-      <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-black">
+      <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-[#06030e]">
         {!videoFailed ? (
           <video
             autoPlay
@@ -38,15 +38,15 @@ export function AppSplashScreen({
           </video>
         ) : null}
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black via-black/70 to-transparent px-6 pb-10 pt-20 text-center sm:pb-12">
-          <p className="text-sm font-medium tracking-[0.14em] text-zinc-200 sm:text-base">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-[#06030e] via-[#06030e]/80 to-transparent px-6 pb-10 pt-20 text-center sm:pb-12">
+          <p className="text-sm font-medium tracking-[0.14em] text-fuchsia-100 sm:text-base">
             {message}
           </p>
         </div>
 
         {videoFailed ? (
           <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-            <p className="text-sm font-medium tracking-[0.14em] text-zinc-200 sm:text-base">
+            <p className="text-sm font-medium tracking-[0.14em] text-fuchsia-100 sm:text-base">
               {message}
             </p>
           </div>

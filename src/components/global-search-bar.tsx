@@ -130,7 +130,7 @@ export function GlobalSearchBar() {
           }}
           onFocus={() => setIsPanelOpen(true)}
           placeholder="Search shows, noticeboard posts, or tracks"
-          className="min-h-12 w-full rounded-[22px] border border-white/10 bg-white/[0.04] px-12 py-3 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/40 focus:bg-white/[0.06]"
+          className="min-h-12 w-full rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-12 py-3 text-sm text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-500/40 focus:bg-white/[0.06]"
         />
         <svg
           aria-hidden="true"
@@ -154,7 +154,7 @@ export function GlobalSearchBar() {
               Type at least {MIN_GLOBAL_SEARCH_QUERY_LENGTH} characters to search.
             </div>
           ) : isLoading ? (
-            <div className="rounded-[20px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300">
+            <div className="rounded-[20px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 text-sm leading-6 text-zinc-300">
               Searching Supabase...
             </div>
           ) : errorMessage ? (
@@ -186,10 +186,10 @@ export function GlobalSearchBar() {
                               setIsPanelOpen(false);
                               setQuery("");
                             }}
-                            className="block rounded-[20px] border border-white/10 bg-white/[0.03] p-4 transition hover:border-amber-300/40 hover:bg-amber-300/10"
+                            className="block rounded-[20px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 transition hover:border-fuchsia-500/40 hover:bg-fuchsia-500/10"
                           >
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-300">
+                              <span className="rounded-full border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-300">
                                 {getGlobalSearchTypeLabel(result.result_type)}
                               </span>
                               {formattedDate ? (

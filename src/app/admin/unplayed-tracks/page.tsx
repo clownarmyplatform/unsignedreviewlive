@@ -8,7 +8,7 @@ export default function AdminUnplayedTracksPage() {
       <div className="space-y-6">
         <PageIntro
           eyebrow="Host control"
-          title="The Acid Clowns Studio"
+          title="The Streaming Room"
           description="Live studio view for the current show queue, with play, revisit, and review control."
         />
         <AdminUnplayedTracksBoard />

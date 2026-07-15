@@ -161,7 +161,7 @@ export function UrlArchiveBoard() {
 
   if (isLoading) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         Loading archived shows...
       </div>
     );
@@ -195,7 +195,7 @@ export function UrlArchiveBoard() {
               void loadShowTracks(show.show_id);
             }
           }}
-          className="scroll-mt-28 rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
+          className="scroll-mt-28 rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5"
         >
           <summary className="list-none cursor-pointer">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -224,7 +224,7 @@ export function UrlArchiveBoard() {
 
           <div className="mt-5 space-y-4">
             <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-              <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+              <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4">
                 <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
                   TOTN Winner
                 </p>
@@ -240,7 +240,7 @@ export function UrlArchiveBoard() {
                 </p>
               </div>
 
-              <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+              <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4">
                 <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
                   Show Links
                 </p>
@@ -251,7 +251,7 @@ export function UrlArchiveBoard() {
                   <div className="mt-4">
                     <Link
                       href={`/show/live?src=${encodeURIComponent(show.venue)}&title=${encodeURIComponent(show.show_title)}`}
-                      className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200"
+                      className="inline-flex min-h-12 items-center justify-center rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
                     >
                       View Previous Show
                     </Link>
@@ -260,7 +260,7 @@ export function UrlArchiveBoard() {
               </div>
             </div>
 
-            <div className="rounded-[22px] border border-white/10 bg-black/20 p-4">
+            <div className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4">
               <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
                 Track List
               </p>
@@ -273,7 +273,7 @@ export function UrlArchiveBoard() {
                   {tracksByShow[show.show_id].map((track, index) => (
                     <div
                       key={track.submission_id}
-                      className="rounded-[18px] border border-white/10 bg-white/[0.03] p-4"
+                      className="rounded-[18px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4"
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                         <div className="flex items-start gap-3">

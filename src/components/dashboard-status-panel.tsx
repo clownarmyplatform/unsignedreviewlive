@@ -227,7 +227,7 @@ export function DashboardStatusPanel() {
       ) : null}
 
       <div className="space-y-4">
-        <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4">
+        <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
           <div className="flex items-center justify-between gap-3">
             <p className="font-semibold text-white">Submission Status</p>
             <StatusPill tone={statusTone(submission)}>
@@ -273,7 +273,7 @@ export function DashboardStatusPanel() {
           ) : null}
         </div>
 
-        <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4">
+        <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
           <div className="flex items-center justify-between gap-3">
             <p className="font-semibold text-white">This Week&apos;s TOTN Vote</p>
             <StatusPill tone={currentVote ? "accent" : "neutral"}>
@@ -302,7 +302,7 @@ export function DashboardStatusPanel() {
               {nominations.map((nomination) => (
                 <div
                   key={nomination.nomination_id}
-                  className="rounded-[18px] border border-white/10 bg-black/20 p-3"
+                  className="rounded-[18px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-3"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -319,8 +319,8 @@ export function DashboardStatusPanel() {
                       onClick={() => handleVote(nomination.nomination_id)}
                       className={`min-h-10 rounded-2xl px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] transition ${
                         nomination.has_user_vote
-                          ? "border border-amber-300/30 bg-amber-300/10 text-amber-100"
-                          : "bg-amber-300 text-black hover:bg-amber-200"
+                          ? "border border-fuchsia-400/30 bg-fuchsia-500/10 text-fuchsia-100"
+                          : "bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] text-white hover:brightness-110"
                       }`}
                     >
                       {nomination.has_user_vote ? "Voted" : "Vote"}

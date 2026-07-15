@@ -63,7 +63,7 @@ export function HomeNoticeboardPreview() {
 
   if (isLoading) {
     return (
-      <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300">
+      <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 text-sm leading-6 text-zinc-300">
         Loading noticeboard updates...
       </div>
     );
@@ -91,7 +91,7 @@ export function HomeNoticeboardPreview() {
         <Link
           key={post.id}
           href={`/noticeboard#noticeboard-post-${post.id}`}
-          className="block rounded-[22px] border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
+          className="block rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
         >
           <div className="flex items-center justify-between gap-3">
             <p className="font-semibold text-white">{post.title}</p>

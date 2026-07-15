@@ -101,7 +101,7 @@ export function TotnLiveBoard() {
 
   if (isLoading) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         Loading TOTN nominations...
       </div>
     );
@@ -136,7 +136,7 @@ export function TotnLiveBoard() {
       {nominations.map((nomination, index) => (
         <article
           key={nomination.nomination_id}
-          className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
+          className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
@@ -162,8 +162,8 @@ export function TotnLiveBoard() {
                 onClick={() => handleVote(nomination.nomination_id)}
                 className={`min-h-12 rounded-2xl px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] transition ${
                   nomination.has_user_vote
-                    ? "border border-amber-300/30 bg-amber-300/10 text-amber-100"
-                    : "bg-amber-300 text-black hover:bg-amber-200"
+                    ? "border border-fuchsia-400/30 bg-fuchsia-500/10 text-fuchsia-100"
+                    : "bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] text-white hover:brightness-110"
                 }`}
               >
                 {nomination.has_user_vote ? "Voted" : "Vote"}

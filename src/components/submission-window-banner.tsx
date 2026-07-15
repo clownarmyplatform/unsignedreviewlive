@@ -65,7 +65,7 @@ export function SubmissionWindowBanner({
       className={`rounded-[24px] border px-4 py-4 ${
         full
           ? "border-rose-400/30 bg-rose-400/10"
-          : "border-amber-300/25 bg-amber-300/10"
+          : "border-fuchsia-400/25 bg-fuchsia-500/10"
       } ${compact ? "" : "sm:px-5"}`}
     >
       <p

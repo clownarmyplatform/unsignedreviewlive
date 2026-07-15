@@ -251,7 +251,7 @@ export function AdminUnplayedTracksBoard() {
     });
   }
 
-  const showTitle = tracks[0]?.show_title ?? "The Acid Clowns Studio";
+  const showTitle = tracks[0]?.show_title ?? "The Streaming Room";
   const showDate = tracks[0]?.show_date
     ? new Date(tracks[0].show_date).toLocaleString()
     : "Start time not set";
@@ -265,14 +265,14 @@ export function AdminUnplayedTracksBoard() {
       ) : null}
 
       {isLoading ? (
-        <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm text-zinc-300">
+        <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm text-zinc-300">
           Loading studio queue...
         </div>
       ) : (
         <>
           {tracks.length > 0 ? (
             <div className="space-y-4">
-              <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+              <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5">
                 <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">
                   Studio Queue
                 </p>
@@ -287,7 +287,7 @@ export function AdminUnplayedTracksBoard() {
                   return (
                     <article
                       key={track.submission_id}
-                      className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
+                      className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5"
                     >
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div className="flex items-start gap-3">
@@ -330,7 +330,7 @@ export function AdminUnplayedTracksBoard() {
                                   ? handlePlayNow(track)
                                   : openTrack(track)
                               }
-                              className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+                              className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
                             >
                               {isPending && isPlayingNow
                                 ? "Opening..."
@@ -344,7 +344,7 @@ export function AdminUnplayedTracksBoard() {
                                 type="button"
                                 disabled={isReviewPending}
                                 onClick={() => handleMarkReviewed(track.submission_id)}
-                                className="min-h-12 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
+                                className="min-h-12 rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-70"
                               >
                                 {isReviewPending ? "Saving..." : "Mark Reviewed"}
                               </button>
@@ -382,7 +382,7 @@ export function AdminUnplayedTracksBoard() {
                   type="button"
                   onClick={handleNominateForTotn}
                   disabled={isNominating}
-                  className="rounded-2xl bg-amber-300 px-4 py-2 text-sm font-semibold text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+                  className="rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {isNominating ? "Nominating..." : "Nominate For TOTN"}
                 </button>
@@ -390,21 +390,21 @@ export function AdminUnplayedTracksBoard() {
                   href={activeTrack.originalUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                  className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   {activeTrack.externalLabel}
                 </a>
                 <button
                   type="button"
                   onClick={() => setActiveTrack(null)}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
+                  className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Close
                 </button>
               </div>
             </div>
             {activeTrack.nominationMessage ? (
-              <div className="border-b border-white/10 px-4 py-3 text-sm text-amber-100">
+              <div className="border-b border-white/10 px-4 py-3 text-sm text-fuchsia-100">
                 {activeTrack.nominationMessage}
               </div>
             ) : null}

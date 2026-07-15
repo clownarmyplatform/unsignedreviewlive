@@ -14,21 +14,19 @@ export function PageIntro({
   badge,
 }: PageIntroProps) {
   return (
-    <section className="mb-5 rounded-[24px] border border-white/10 bg-white/[0.04] p-4 shadow-xl shadow-black/20 sm:mb-6 sm:rounded-[32px] sm:p-7">
+    <section className="uk-panel mb-5 rounded-[24px] p-4 sm:mb-6 sm:rounded-[32px] sm:p-7">
       <div className="mb-3 flex flex-wrap items-center gap-3">
-        <p className="text-xs uppercase tracking-[0.35em] text-amber-300/85">
-          {eyebrow}
-        </p>
+        <p className="uk-eyebrow text-xs uppercase tracking-[0.35em]">{eyebrow}</p>
         {badge ? (
-          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-300">
+          <span className="uk-badge rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em]">
             {badge}
           </span>
         ) : null}
       </div>
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
-          <h1 className="font-display text-3xl uppercase leading-none tracking-[0.04em] text-white sm:text-4xl sm:tracking-[0.06em] lg:text-5xl">
-            {title}
+          <h1 className="font-display text-3xl uppercase leading-none tracking-[0.04em] sm:text-4xl sm:tracking-[0.06em] lg:text-5xl">
+            <span className="uk-text-gradient">{title}</span>
           </h1>
           {description ? (
             <p className="mt-3 text-sm leading-7 text-zinc-300 sm:text-base">

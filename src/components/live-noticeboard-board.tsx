@@ -85,7 +85,7 @@ export function LiveNoticeboardBoard() {
 
   if (isLoading) {
     return (
-      <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5 text-sm leading-7 text-zinc-300">
+      <div className="rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5 text-sm leading-7 text-zinc-300">
         Loading noticeboard posts...
       </div>
     );
@@ -113,7 +113,7 @@ export function LiveNoticeboardBoard() {
         <article
           key={post.id}
           id={`noticeboard-post-${post.id}`}
-          className="scroll-mt-28 rounded-[24px] border border-white/10 bg-white/[0.03] p-5"
+          className="scroll-mt-28 rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-5"
         >
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="text-xl font-semibold text-white">{post.title}</h2>

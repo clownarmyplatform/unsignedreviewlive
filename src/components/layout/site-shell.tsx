@@ -58,13 +58,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   }, [pathname, setIsShowingIosInstructions]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[radial-gradient(circle_at_top,_rgba(255,107,53,0.18),_transparent_30%),linear-gradient(180deg,_#0f1115_0%,_#08090c_100%)] text-zinc-50">
+    <div className="uk-shell-bg relative min-h-screen overflow-x-hidden text-zinc-50">
       <PwaBoot />
       <AppConstructionGate />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] opacity-30" />
+      <div className="uk-grid-overlay pointer-events-none absolute inset-0 opacity-35" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(circle_at_top,rgba(255,45,166,0.18),transparent_60%)] blur-3xl" />
       <div className="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3 pb-24 pt-3 sm:px-6 sm:pb-28 sm:pt-4 lg:px-8">
         <header
-          className={`sticky top-0 z-40 mb-5 rounded-[24px] border border-white/10 bg-black/30 px-3 py-3 backdrop-blur transition-[padding,transform,background-color,border-radius] duration-300 sm:mb-6 sm:rounded-[28px] sm:px-6 sm:py-4 ${
+          className={`uk-panel sticky top-0 z-40 mb-5 rounded-[24px] px-3 py-3 backdrop-blur transition-[padding,transform,background-color,border-radius] duration-300 sm:mb-6 sm:rounded-[28px] sm:px-6 sm:py-4 ${
             isHeaderCollapsed ? "translate-y-0 py-3" : ""
           }`}
         >
@@ -75,7 +76,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 alt="uniqueKontent logo"
                 width={96}
                 height={96}
-                className="h-16 w-16 rounded-2xl border border-white/10 object-cover shadow-lg shadow-black/40 sm:h-24 sm:w-24 sm:rounded-3xl"
+                className="h-16 w-16 rounded-2xl border border-fuchsia-500/25 object-cover shadow-[0_18px_42px_rgba(142,66,255,0.28)] sm:h-24 sm:w-24 sm:rounded-3xl"
                 priority
               />
             </Link>
@@ -84,7 +85,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <Link
                 href="/account"
                 aria-label="Open account page"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12 sm:rounded-2xl"
+                className="uk-icon-chip flex h-9 w-9 items-center justify-center rounded-xl transition sm:h-12 sm:w-12 sm:rounded-2xl"
               >
                 <span className="sr-only">Open account page</span>
                 {profile?.avatarUrl ? (
@@ -116,7 +117,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 aria-expanded={isMenuOpen}
                 aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 onClick={() => setIsMenuOpen((open) => !open)}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:h-12 sm:w-12 sm:rounded-2xl"
+                className="uk-icon-chip flex h-9 w-9 items-center justify-center rounded-xl transition sm:h-12 sm:w-12 sm:rounded-2xl"
               >
                 <span className="sr-only">
                   {isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -141,14 +142,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               </button>
 
               {isMenuOpen ? (
-                <nav className="absolute right-0 top-[calc(100%+0.75rem)] z-30 w-[min(18rem,calc(100vw-1.5rem))] rounded-[24px] border border-white/10 bg-[#12141a]/95 p-3 shadow-2xl shadow-black/50 backdrop-blur sm:w-72 sm:rounded-[28px]">
+                <nav className="uk-panel absolute right-0 top-[calc(100%+0.75rem)] z-30 w-[min(18rem,calc(100vw-1.5rem))] rounded-[24px] p-3 shadow-2xl shadow-black/50 backdrop-blur sm:w-72 sm:rounded-[28px]">
                   <div className="grid gap-2">
                     {navItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100 transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:tracking-[0.16em]"
+                        className="uk-button-secondary rounded-2xl px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] transition sm:tracking-[0.16em]"
                       >
                         {item.label}
                       </Link>
@@ -159,14 +160,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                         onClick={() => {
                           void promptInstall();
                         }}
-                        className="rounded-2xl border border-white/8 bg-white/5 px-4 py-3 text-left text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100 transition hover:border-amber-300/40 hover:bg-amber-300/10 sm:tracking-[0.16em]"
+                        className="uk-button-secondary rounded-2xl px-4 py-3 text-left text-sm font-semibold uppercase tracking-[0.12em] transition sm:tracking-[0.16em]"
                       >
                         {hasIosInstructions ? "Add to Home Screen" : "Install App"}
                       </button>
                     ) : null}
                   </div>
                   {canInstall && hasIosInstructions && isShowingIosInstructions ? (
-                    <div className="mt-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm leading-6 text-zinc-300">
+                    <div className="uk-panel-soft mt-3 rounded-2xl p-4 text-sm leading-6 text-zinc-300">
                       To install: tap Share, then Add to Home Screen.
                     </div>
                   ) : null}
@@ -183,14 +184,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             }`}
             aria-hidden={isHeaderCollapsed}
           >
-            <p className="text-xs uppercase tracking-[0.35em] text-amber-300/80">
+            <p className="uk-eyebrow text-xs uppercase tracking-[0.35em]">
               uniqueKontent
             </p>
             <Link
               href="/"
               className="font-display text-2xl uppercase leading-none tracking-[0.06em] text-white sm:text-3xl sm:tracking-[0.08em]"
             >
-              uniqueKontent
+              <span className="uk-text-gradient">uniqueKontent</span>
             </Link>
           </div>
 

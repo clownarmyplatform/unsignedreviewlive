@@ -254,7 +254,7 @@ export function SubmitTrackForm() {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+      <div className="rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] px-4 py-3">
         <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">
           Submission Window
         </p>
@@ -269,7 +269,7 @@ export function SubmitTrackForm() {
           </p>
         ) : null}
         {alreadySubmittedForShow ? (
-          <p className="mt-2 text-sm leading-6 text-amber-100">
+          <p className="mt-2 text-sm leading-6 text-fuchsia-100">
             You already have one track in this show. Edit it from{" "}
             <Link href="/dashboard" className="underline underline-offset-4">
               your dashboard
@@ -292,7 +292,7 @@ export function SubmitTrackForm() {
               placeholder={field.placeholder}
               disabled={disableForm}
               defaultValue={field.name === "artist_name" ? defaultArtistName : undefined}
-              className="min-h-12 w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60"
+              className="min-h-12 w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
             />
           </label>
         ))}
@@ -307,17 +307,17 @@ export function SubmitTrackForm() {
           rows={5}
           placeholder="Anything the hosts should know before the show?"
           disabled={disableForm}
-          className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-amber-300/60"
+          className="w-full rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-4 py-3 text-white outline-none transition placeholder:text-zinc-500 focus:border-fuchsia-400/60 focus:shadow-[0_0_0_1px_rgba(255,45,166,0.24)]"
         />
       </label>
 
-      <label className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+      <label className="flex items-start gap-3 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
         <input
           required
           name="rights_confirmed"
           type="checkbox"
           disabled={disableForm}
-          className="mt-1 h-5 w-5 rounded border-white/10 bg-transparent accent-amber-300"
+          className="mt-1 h-5 w-5 rounded border-white/10 bg-transparent accent-fuchsia-500"
         />
         <span className="text-sm leading-6 text-zinc-300">
           I confirm that I own this track or have the rights and permission to
@@ -340,7 +340,7 @@ export function SubmitTrackForm() {
       <button
         type="submit"
         disabled={disableForm}
-        className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-70"
+        className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isPending
           ? "Submitting..."

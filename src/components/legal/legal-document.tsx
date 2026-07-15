@@ -42,7 +42,7 @@ export function LegalDocument({
               ))}
 
               {section.bullets?.length ? (
-                <ul className="list-disc space-y-2 pl-5 text-zinc-200 marker:text-amber-300/80">
+                <ul className="list-disc space-y-2 pl-5 text-zinc-200 marker:text-fuchsia-400/80">
                   {section.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>
                   ))}
@@ -63,7 +63,7 @@ export function LegalDocument({
                   ))}
 
                   {subsection.bullets?.length ? (
-                    <ul className="list-disc space-y-2 pl-5 text-zinc-200 marker:text-amber-300/80">
+                    <ul className="list-disc space-y-2 pl-5 text-zinc-200 marker:text-fuchsia-400/80">
                       {subsection.bullets.map((bullet) => (
                         <li key={bullet}>{bullet}</li>
                       ))}

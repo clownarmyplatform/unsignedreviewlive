@@ -20,7 +20,7 @@ export function SectionCard({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <section className="rounded-[24px] border border-white/10 bg-black/30 p-4 shadow-lg shadow-black/20 sm:rounded-[28px] sm:p-5">
+    <section className="uk-panel rounded-[24px] p-4 sm:rounded-[28px] sm:p-5">
       {collapsible ? (
         <button
           type="button"
@@ -36,7 +36,7 @@ export function SectionCard({
               <p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p>
             ) : null}
           </div>
-          <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-200 sm:h-10 sm:w-10 sm:rounded-2xl">
+          <span className="uk-icon-chip mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl sm:h-10 sm:w-10 sm:rounded-2xl">
             <svg
               aria-hidden="true"
               viewBox="0 0 24 24"
@@ -53,8 +53,8 @@ export function SectionCard({
         </button>
       ) : (
         <div className="mb-4">
-          <h2 className="font-display text-xl uppercase tracking-[0.04em] text-white sm:text-2xl sm:tracking-[0.06em]">
-            {title}
+          <h2 className="font-display text-xl uppercase tracking-[0.04em] sm:text-2xl sm:tracking-[0.06em]">
+            <span className="uk-text-gradient">{title}</span>
           </h2>
           {description ? (
             <p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p>

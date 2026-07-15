@@ -114,7 +114,7 @@ export function HomeShowFlowPanel() {
 
   if (isLoading) {
     return (
-      <div className="rounded-[22px] border border-white/10 bg-white/[0.03] p-4 text-sm leading-6 text-zinc-300">
+      <div className="rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 text-sm leading-6 text-zinc-300">
         Loading live show flow...
       </div>
     );
@@ -135,7 +135,7 @@ export function HomeShowFlowPanel() {
     <div className="space-y-4">
       <Link
         href="/totn"
-        className="block rounded-[22px] border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
+        className="block rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
       >
         <div className="flex items-start justify-between gap-3">
           <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">TOTN</p>
@@ -157,7 +157,7 @@ export function HomeShowFlowPanel() {
 
       <Link
         href="/queue"
-        className="block rounded-[22px] border border-white/10 bg-white/[0.03] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
+        className="block rounded-[22px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4 transition hover:border-white/20 hover:bg-white/[0.05]"
       >
         <div className="flex items-start justify-between gap-3">
           <p className="text-sm uppercase tracking-[0.3em] text-zinc-500">Queue</p>

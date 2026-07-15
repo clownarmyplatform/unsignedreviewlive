@@ -10,15 +10,14 @@ const rules = [
   "The track must be made by you.",
   "The track must be unsigned.",
   "One track per entry, per show.",
-  "Use whatever you like to make your track; hardware, software, infinity, music is music.",
+  "Any production workflow is welcome, including hardware and software.",
   "AI generated music is not permitted.",
   "Submitting a track does not guarantee it will be played.",
-  "Call someone a kunt at all times.",
-  "Rate in cats.",
-  "My show, my rules. No bitching!",
   "The URL goes live every Tuesday at 7:30 PM, except when the URL is on tour; in that case, it will go live on a Saturday at 5 PM.",
   "Tracks must be submitted before show start on the date shown.",
   "No pre-listening to tracks in the thread. Save it for the night!",
+  "Please make sure submitted links are working and accessible.",
+  "By submitting, you confirm you have the right to share the track for review.",
 ];
 
 type SubmissionRulesGateProps = {
@@ -75,14 +74,14 @@ export function SubmissionRulesGate({ children }: SubmissionRulesGateProps) {
       {!isChecking && !hasAccepted ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4 py-6">
           <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[28px] border border-white/10 bg-[#120f12] p-5 shadow-2xl shadow-black/60 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10 hover:scrollbar-thumb-white/15 sm:p-6">
-            <p className="text-xs uppercase tracking-[0.3em] text-amber-200">
+            <p className="text-xs uppercase tracking-[0.3em] text-fuchsia-300">
               To submit please accept
             </p>
             <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] text-white">
-              The Acid Clown&apos;s URL Rules...
+              Submission Rules
             </h2>
 
-            <div className="mt-5 space-y-3 rounded-[24px] border border-white/10 bg-white/[0.03] p-4">
+            <div className="mt-5 space-y-3 rounded-[24px] border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
               {rules.map((rule) => (
                 <p key={rule} className="text-sm leading-6 text-zinc-200">
                   {rule}
@@ -90,12 +89,12 @@ export function SubmissionRulesGate({ children }: SubmissionRulesGateProps) {
               ))}
             </div>
 
-            <label className="mt-5 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <label className="mt-5 flex items-start gap-3 rounded-2xl border border-fuchsia-500/15 bg-[linear-gradient(180deg,rgba(16,11,31,0.88),rgba(8,7,18,0.74))] p-4">
               <input
                 type="checkbox"
                 checked={rememberChoice}
                 onChange={(event) => setRememberChoice(event.target.checked)}
-                className="mt-1 h-5 w-5 rounded border-white/10 bg-transparent accent-amber-300"
+                className="mt-1 h-5 w-5 rounded border-white/10 bg-transparent accent-fuchsia-500"
               />
               <span className="text-sm leading-6 text-zinc-300">
                 Remember my choice on this device.
@@ -106,14 +105,14 @@ export function SubmissionRulesGate({ children }: SubmissionRulesGateProps) {
               <button
                 type="button"
                 onClick={handleAccept}
-                className="min-h-12 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-black transition hover:bg-amber-200"
+                className="min-h-12 rounded-2xl bg-[linear-gradient(90deg,var(--brand-start),var(--brand-mid),var(--brand-end))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
               >
                 Accept
               </button>
               <button
                 type="button"
                 onClick={handleDeny}
-                className="min-h-12 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/[0.08]"
+                className="min-h-12 rounded-2xl border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(18,12,35,0.92),rgba(8,8,20,0.76))] px-5 py-3 text-sm font-bold uppercase tracking-[0.12em] text-white transition hover:bg-white/[0.08]"
               >
                 Deny
               </button>

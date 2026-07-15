@@ -11,8 +11,8 @@ export function ActionLink({
 }) {
   const styles =
     variant === "primary"
-      ? "bg-amber-300 text-black hover:bg-amber-200"
-      : "border border-white/10 bg-white/5 text-white hover:bg-white/10";
+      ? "uk-button-primary"
+      : "uk-button-secondary";
 
   return (
     <Link

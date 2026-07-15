@@ -27,7 +27,7 @@ export function UserAvatar({
           className="h-full w-full object-cover"
         />
       ) : (
-        <div className="flex h-full w-full items-center justify-center bg-amber-300/10 text-amber-100">
+        <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(135deg,rgba(255,45,166,0.2),rgba(142,66,255,0.18),rgba(29,183,255,0.18))] text-fuchsia-100">
           <span className={`font-semibold uppercase tracking-[0.12em] ${textClassName}`}>
             {initials}
           </span>
