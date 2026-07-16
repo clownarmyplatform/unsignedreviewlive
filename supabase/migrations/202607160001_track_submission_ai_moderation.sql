@@ -151,6 +151,7 @@ begin
   from public.submissions as sub
   where sub.show_id = target_show.id
     and sub.auth_user_id = p_auth_user_id
+    and sub.moderation_status in ('pending_review', 'approved')
   order by sub.created_at asc
   limit 1;
 

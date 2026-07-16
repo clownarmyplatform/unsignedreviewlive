@@ -126,6 +126,7 @@ export function SubmitTrackForm() {
           .select("*")
           .eq("auth_user_id", user.id)
           .eq("show_id", windowStatus.show_id)
+          .in("moderation_status", ["pending_review", "approved"])
           .order("created_at", { ascending: true })
           .limit(1);
 

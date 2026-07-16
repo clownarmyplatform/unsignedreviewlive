@@ -41,6 +41,7 @@ export function DashboardActions() {
           .select("id")
           .eq("auth_user_id", user.id)
           .eq("show_id", snapshot.show_id)
+          .in("moderation_status", ["pending_review", "approved"])
           .limit(1);
 
         if (isMounted) {

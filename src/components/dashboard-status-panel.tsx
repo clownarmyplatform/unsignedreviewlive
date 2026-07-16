@@ -127,6 +127,7 @@ export function DashboardStatusPanel() {
                 .select("*")
                 .eq("auth_user_id", user.id)
                 .eq("show_id", nextSnapshot.show_id)
+                .in("moderation_status", ["pending_review", "approved"])
                 .order("created_at", { ascending: true })
                 .limit(1),
               supabase.rpc("get_totn_board_for_active_show"),
