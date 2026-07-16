@@ -222,6 +222,72 @@ export type Database = {
         };
         Relationships: [];
       };
+      image_moderation_log: {
+        Row: {
+          actor_email: string | null;
+          actor_role: "user" | "admin";
+          actor_user_id: string;
+          ai_moderation_categories: Json | null;
+          ai_moderation_checked_at: string;
+          ai_moderation_error: string | null;
+          ai_moderation_model: string;
+          ai_moderation_scores: Json | null;
+          created_at: string;
+          file_content_type: string;
+          file_name: string | null;
+          file_sha256: string;
+          file_size_bytes: number;
+          id: string;
+          moderation_status: "clean" | "flagged" | "error";
+          related_noticeboard_post_id: string | null;
+          strongest_category: string | null;
+          strongest_score: number | null;
+          target_type: "avatar" | "noticeboard_image";
+        };
+        Insert: {
+          actor_email?: string | null;
+          actor_role: "user" | "admin";
+          actor_user_id: string;
+          ai_moderation_categories?: Json | null;
+          ai_moderation_checked_at: string;
+          ai_moderation_error?: string | null;
+          ai_moderation_model: string;
+          ai_moderation_scores?: Json | null;
+          created_at?: string;
+          file_content_type: string;
+          file_name?: string | null;
+          file_sha256: string;
+          file_size_bytes: number;
+          id?: string;
+          moderation_status: "clean" | "flagged" | "error";
+          related_noticeboard_post_id?: string | null;
+          strongest_category?: string | null;
+          strongest_score?: number | null;
+          target_type: "avatar" | "noticeboard_image";
+        };
+        Update: {
+          actor_email?: string | null;
+          actor_role?: "user" | "admin";
+          actor_user_id?: string;
+          ai_moderation_categories?: Json | null;
+          ai_moderation_checked_at?: string;
+          ai_moderation_error?: string | null;
+          ai_moderation_model?: string;
+          ai_moderation_scores?: Json | null;
+          created_at?: string;
+          file_content_type?: string;
+          file_name?: string | null;
+          file_sha256?: string;
+          file_size_bytes?: number;
+          id?: string;
+          moderation_status?: "clean" | "flagged" | "error";
+          related_noticeboard_post_id?: string | null;
+          strongest_category?: string | null;
+          strongest_score?: number | null;
+          target_type?: "avatar" | "noticeboard_image";
+        };
+        Relationships: [];
+      };
       noticeboard_posts: {
         Row: {
           id: string;

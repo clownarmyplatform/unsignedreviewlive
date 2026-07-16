@@ -10,9 +10,8 @@ import {
   MIN_GLOBAL_SEARCH_QUERY_LENGTH,
 } from "@/lib/global-search";
 import {
-  createNoticeboardImagePath,
   formatNoticeboardDate,
-  NOTICEBOARD_IMAGE_BUCKET,
+  NOTICEBOARD_IMAGE_ACCEPTED_TYPES,
   NOTICEBOARD_IMAGE_MAX_BYTES,
   type NoticeboardPost,
 } from "@/lib/noticeboard";
@@ -231,50 +230,6 @@ export function AdminNoticeboardManager() {
     setFeedbackMessage(null);
   }
 
-  async function uploadSelectedImage() {
-    if (!selectedImage) {
-      return {
-        imagePath: removeExistingImage ? null : form.image_path,
-        imageUrl: removeExistingImage ? null : form.image_url,
-      };
-    }
-
-    if (selectedImage.size > NOTICEBOARD_IMAGE_MAX_BYTES) {
-      throw new Error("Image files must be 2MB or smaller.");
-    }
-
-    const supabase = getSupabaseBrowserClient();
-    const imagePath = createNoticeboardImagePath(selectedImage.name);
-    const { error } = await supabase.storage
-      .from(NOTICEBOARD_IMAGE_BUCKET)
-      .upload(imagePath, selectedImage, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    const { data } = supabase.storage
-      .from(NOTICEBOARD_IMAGE_BUCKET)
-      .getPublicUrl(imagePath);
-
-    return {
-      imagePath,
-      imageUrl: data.publicUrl,
-    };
-  }
-
-  async function removeImageFromStorage(imagePath: string | null) {
-    if (!imagePath) {
-      return;
-    }
-
-    const supabase = getSupabaseBrowserClient();
-    await supabase.storage.from(NOTICEBOARD_IMAGE_BUCKET).remove([imagePath]);
-  }
-
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0] ?? null;
 
@@ -291,6 +246,19 @@ export function AdminNoticeboardManager() {
       setFeedbackMessage({
         tone: "error",
         text: "Image files must be 2MB or smaller.",
+      });
+      event.target.value = "";
+      return;
+    }
+
+    if (
+      !NOTICEBOARD_IMAGE_ACCEPTED_TYPES.includes(
+        file.type as (typeof NOTICEBOARD_IMAGE_ACCEPTED_TYPES)[number],
+      )
+    ) {
+      setFeedbackMessage({
+        tone: "error",
+        text: "Only PNG, JPG, WebP, and non-animated GIF images are supported.",
       });
       event.target.value = "";
       return;
@@ -318,65 +286,60 @@ export function AdminNoticeboardManager() {
         return;
       }
 
-      let uploadedImagePath: string | null = null;
-
       try {
-        const { imagePath, imageUrl } = await uploadSelectedImage();
-        uploadedImagePath = selectedImage ? imagePath : null;
-
         const supabase = getSupabaseBrowserClient();
-        const payload = {
-          p_title: form.title.trim(),
-          p_body: form.body.trim(),
-          p_tag: form.tag.trim() || null,
-          p_image_url: imageUrl,
-          p_image_path: imagePath,
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!session?.access_token) {
+          setFeedbackMessage({
+            tone: "error",
+            text: "You must be signed in to manage noticeboard posts.",
+          });
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("title", form.title.trim());
+        formData.append("body", form.body.trim());
+        formData.append("tag", form.tag.trim());
+        formData.append("post_id", editingPostId ?? "");
+        formData.append("remove_existing_image", removeExistingImage ? "true" : "false");
+
+        if (selectedImage) {
+          formData.append("image", selectedImage);
+        }
+
+        const response = await fetch("/api/admin/noticeboard", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: formData,
+        });
+        const payload = (await response.json()) as {
+          error?: string;
+          message?: string;
+          post?: NoticeboardPost;
         };
 
-        if (editingPostId) {
-          const previousImagePath = form.image_path;
-          const { data, error } = await supabase.rpc("update_noticeboard_post", {
-            p_post_id: editingPostId,
-            ...payload,
-          });
-
-          if (error) {
-            throw new Error(error.message);
-          }
-
-          if ((removeExistingImage || selectedImage) && previousImagePath && previousImagePath !== imagePath) {
-            await removeImageFromStorage(previousImagePath);
-          }
-
-          setPosts((current) => [
-            data,
-            ...current.filter((post) => post.id !== editingPostId),
-          ]);
-          setFeedbackMessage({
-            tone: "success",
-            text: "Noticeboard post updated.",
-          });
-        } else {
-          const { data, error } = await supabase.rpc("create_noticeboard_post", payload);
-
-          if (error) {
-            throw new Error(error.message);
-          }
-
-          setPosts((current) => [data, ...current]);
-          setFeedbackMessage({
-            tone: "success",
-            text: "Noticeboard post created.",
-          });
+        if (!response.ok || !payload.post) {
+          throw new Error(payload.error ?? "Could not save the noticeboard post.");
         }
+
+        setPosts((current) => [
+          payload.post as NoticeboardPost,
+          ...current.filter((post) => post.id !== (payload.post as NoticeboardPost).id),
+        ]);
+        setFeedbackMessage({
+          tone: "success",
+          text: payload.message ?? "Noticeboard post saved.",
+        });
 
         resetForm({ keepFeedback: true });
         window.dispatchEvent(new CustomEvent("noticeboard-updated"));
       } catch (error) {
-        if (uploadedImagePath) {
-          await removeImageFromStorage(uploadedImagePath);
-        }
-
         setFeedbackMessage({
           tone: "error",
           text:
@@ -394,15 +357,36 @@ export function AdminNoticeboardManager() {
 
       try {
         const supabase = getSupabaseBrowserClient();
-        const { error } = await supabase.rpc("delete_noticeboard_post", {
-          p_post_id: post.id,
-        });
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-        if (error) {
-          throw new Error(error.message);
+        if (!session?.access_token) {
+          setFeedbackMessage({
+            tone: "error",
+            text: "You must be signed in to manage noticeboard posts.",
+          });
+          return;
         }
 
-        await removeImageFromStorage(post.image_path);
+        const response = await fetch("/api/admin/noticeboard", {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            post_id: post.id,
+          }),
+        });
+        const payload = (await response.json()) as {
+          error?: string;
+        };
+
+        if (!response.ok) {
+          throw new Error(payload.error ?? "Could not delete the noticeboard post.");
+        }
+
         setPosts((current) => current.filter((item) => item.id !== post.id));
         if (editingPostId === post.id) {
           resetForm();

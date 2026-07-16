@@ -6,6 +6,7 @@ import type {
   SubmissionModerationDecision,
 } from "@/lib/submissions/track-submission";
 import { buildModerationInput } from "@/lib/submissions/track-submission";
+import { shouldRequireTrackSubmissionManualReview } from "@/lib/submissions/moderation-policy";
 
 const MODERATION_MODEL = "omni-moderation-latest";
 const DEFAULT_MODERATION_TIMEOUT_MS = 8_000;
@@ -81,19 +82,26 @@ export async function moderateTrackSubmission(
     );
 
     const result = response.results[0];
+    const categories = result?.categories
+      ? (result.categories as unknown as Record<string, boolean>)
+      : null;
+    const scores = result?.category_scores
+      ? (result.category_scores as unknown as Record<string, number>)
+      : null;
+    const rawFlagged = Boolean(result?.flagged);
 
     return {
-      categories: result?.categories
-        ? (result.categories as unknown as Record<string, boolean>)
-        : null,
+      categories,
       checkedAt,
       error: null,
       model: response.model ?? MODERATION_MODEL,
-      requiresManualReview: Boolean(result?.flagged),
-      scores: result?.category_scores
-        ? (result.category_scores as unknown as Record<string, number>)
-        : null,
-      status: result?.flagged ? "flagged" : "clean",
+      requiresManualReview: shouldRequireTrackSubmissionManualReview(
+        rawFlagged,
+        categories,
+        scores,
+      ),
+      scores,
+      status: rawFlagged ? "flagged" : "clean",
     };
   } catch (error) {
     return {

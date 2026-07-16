@@ -2,6 +2,12 @@ import type { Database } from "@/lib/supabase/types";
 
 export const NOTICEBOARD_IMAGE_BUCKET = "noticeboard-images";
 export const NOTICEBOARD_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
+export const NOTICEBOARD_IMAGE_ACCEPTED_TYPES = [
+  "image/png",
+  "image/jpeg",
+  "image/webp",
+  "image/gif",
+] as const;
 
 export type NoticeboardPost =
   Database["public"]["Functions"]["get_noticeboard_posts"]["Returns"][number];

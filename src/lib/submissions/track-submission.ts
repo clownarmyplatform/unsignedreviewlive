@@ -193,11 +193,7 @@ export function buildModerationInput(submission: NormalizedTrackSubmission) {
 }
 
 export function getTrackSubmissionSuccessMessage(submission: SubmissionRecord) {
-  if (
-    submission.requires_manual_review ||
-    submission.ai_moderation_status === "flagged" ||
-    submission.ai_moderation_status === "error"
-  ) {
+  if (submission.requires_manual_review || submission.ai_moderation_status === "error") {
     return "Track submitted. It has been held for moderation review before it can appear publicly.";
   }
 

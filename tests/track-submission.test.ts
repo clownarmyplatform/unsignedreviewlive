@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { handleTrackSubmissionRequest } from "../src/lib/submissions/handle-track-submission-request";
+import { shouldRequireTrackSubmissionManualReview } from "../src/lib/submissions/moderation-policy";
 import {
   buildModerationInput,
   type PersistSubmissionInput,
@@ -159,6 +160,33 @@ test("keeps flagged input in manual review without exposing categories to the us
   );
 });
 
+test("allows lower-risk 15+ edgy content without forcing extra manual review", async () => {
+  const response = await handleTrackSubmissionRequest(
+    createRequest(baseSubmission),
+    createDeps({
+      moderation: {
+        categories: { violence: true },
+        checkedAt: "2026-07-16T12:00:00.000Z",
+        error: null,
+        model: "omni-moderation-latest",
+        requiresManualReview: false,
+        scores: { violence: 0.41 },
+        status: "flagged",
+      },
+    }),
+  );
+  const payload = await readJson(response);
+  const submission = payload.submission as SubmissionRecord;
+
+  assert.equal(response.status, 200);
+  assert.equal(submission.ai_moderation_status, "flagged");
+  assert.equal(submission.requires_manual_review, false);
+  assert.equal(
+    payload.message,
+    "Track submitted. It is now waiting for moderation review before it can appear publicly.",
+  );
+});
+
 test("saves for manual review when moderation fails", async () => {
   const response = await handleTrackSubmissionRequest(
     createRequest(baseSubmission),
@@ -247,4 +275,42 @@ test("rejects malformed input", async () => {
 
   assert.equal(response.status, 400);
   assert.equal(payload.error, "Track URL must be a valid http or https link.");
+});
+
+test("policy requires review for hate and targeted abuse categories", () => {
+  assert.equal(
+    shouldRequireTrackSubmissionManualReview(
+      true,
+      { hate: true },
+      { hate: 0.51 },
+    ),
+    true,
+  );
+  assert.equal(
+    shouldRequireTrackSubmissionManualReview(
+      true,
+      { harassment: true },
+      { harassment: 0.63 },
+    ),
+    true,
+  );
+});
+
+test("policy allows mild flagged violence or sexual references below threshold", () => {
+  assert.equal(
+    shouldRequireTrackSubmissionManualReview(
+      true,
+      { violence: true },
+      { violence: 0.4 },
+    ),
+    false,
+  );
+  assert.equal(
+    shouldRequireTrackSubmissionManualReview(
+      true,
+      { sexual: true },
+      { sexual: 0.45 },
+    ),
+    false,
+  );
 });

@@ -8,9 +8,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useAuth } from "@/components/providers/auth-provider";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import {
-  AVATAR_BUCKET,
   AVATAR_MAX_UPLOAD_BYTES,
-  getAvatarPath,
   isSupportedAvatarType,
   processAvatarFile,
 } from "@/lib/avatar";
@@ -386,37 +384,40 @@ export function AccountSpace() {
 
       try {
         const supabase = getSupabaseBrowserClient();
-        const avatarPath = getAvatarPath(user.id);
         const avatarFile = new File([avatarBlob], "avatar.webp", {
           type: "image/webp",
         });
-        const { error: uploadError } = await supabase.storage
-          .from(AVATAR_BUCKET)
-          .upload(avatarPath, avatarFile, {
-            cacheControl: "3600",
-            contentType: "image/webp",
-            upsert: true,
-          });
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-        if (uploadError) {
+        if (!session?.access_token) {
           setAvatarMessage({
             type: "error",
-            text: uploadError.message,
+            text: "You must be signed in to update your profile picture.",
           });
           return;
         }
 
-        const { data } = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(avatarPath);
-        const nextAvatarUrl = `${data.publicUrl}?v=${Date.now()}`;
-        const { error: profileError } = await supabase.rpc("update_own_profile_avatar", {
-          p_avatar_url: nextAvatarUrl,
-          p_avatar_path: avatarPath,
-        });
+        const formData = new FormData();
+        formData.append("avatar", avatarFile);
 
-        if (profileError) {
+        const response = await fetch("/api/account/avatar", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: formData,
+        });
+        const payload = (await response.json()) as {
+          avatarUrl?: string;
+          error?: string;
+        };
+
+        if (!response.ok || !payload.avatarUrl) {
           setAvatarMessage({
             type: "error",
-            text: profileError.message,
+            text: payload.error ?? "Could not upload your profile picture.",
           });
           return;
         }
@@ -429,7 +430,7 @@ export function AccountSpace() {
         window.dispatchEvent(
           new CustomEvent("profile-updated", {
             detail: {
-              avatarUrl: nextAvatarUrl,
+              avatarUrl: payload.avatarUrl,
             },
           }),
         );

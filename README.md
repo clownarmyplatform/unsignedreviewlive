@@ -12,7 +12,7 @@ OPENAI_API_KEY=...
 OPENAI_MODERATION_TIMEOUT_MS=8000
 ```
 
-`OPENAI_API_KEY` is server-only and is used for `omni-moderation-latest` on track submission text. `SUPABASE_SERVICE_ROLE_KEY` is server-only and is used by the Next.js submission route after the signed-in user has been verified.
+`OPENAI_API_KEY` is server-only and is used for `omni-moderation-latest` on track submission text plus profile-avatar and noticeboard image moderation. `SUPABASE_SERVICE_ROLE_KEY` is server-only and is used by the Next.js server routes after the signed-in user has been verified. Image moderation attempts are logged without storing an image preview.
 
 ## Getting Started
 
