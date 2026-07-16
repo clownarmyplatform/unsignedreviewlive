@@ -49,6 +49,10 @@ function canEditSubmission(status: SubmissionRow["status"]) {
 }
 
 function formatSubmissionStatus(submission: SubmissionRow) {
+  if (submission.moderation_status === "pending_review") {
+    return "In Review";
+  }
+
   if (submission.moderation_status === "rejected") {
     return "Rejected";
   }
@@ -232,7 +236,8 @@ export function UserSubmissionsPanel() {
           {submissions.map((submission) => {
             const isEditing = editingId === submission.id && editValues;
             const isEditable =
-              submission.moderation_status === "approved" &&
+              (submission.moderation_status === "approved" ||
+                submission.moderation_status === "pending_review") &&
               canEditSubmission(submission.status);
 
             return (
@@ -261,6 +266,8 @@ export function UserSubmissionsPanel() {
                     tone={
                       submission.moderation_status === "approved"
                         ? statusToneMap[submission.status]
+                        : submission.moderation_status === "pending_review"
+                          ? "warning"
                         : "warning"
                     }
                   >
@@ -412,7 +419,9 @@ export function UserSubmissionsPanel() {
                   </div>
                 ) : (
                   <p className="mt-4 text-sm leading-6 text-zinc-500">
-                    {submission.moderation_status === "rejected"
+                    {submission.moderation_status === "pending_review"
+                      ? "This submission is waiting for moderation review before it can appear publicly."
+                      : submission.moderation_status === "rejected"
                       ? "This submission was rejected by moderation."
                       : submission.moderation_status === "removed"
                         ? "This submission was removed by moderation."

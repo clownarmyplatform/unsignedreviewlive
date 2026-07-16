@@ -76,6 +76,7 @@ export type Database = {
           artist_id: string | null;
           auth_user_id: string | null;
           submitter_email: string | null;
+          submission_attempt_id: string | null;
           artist_name: string;
           track_title: string;
           track_url: string;
@@ -83,7 +84,14 @@ export type Database = {
           message: string | null;
           rights_confirmed: boolean;
           status: "pending" | "queued" | "played" | "reviewed" | "rejected";
-          moderation_status: "approved" | "rejected" | "removed";
+          moderation_status: "pending_review" | "approved" | "rejected" | "removed";
+          ai_moderation_status: "unchecked" | "clean" | "flagged" | "error";
+          requires_manual_review: boolean;
+          ai_moderation_categories: Json | null;
+          ai_moderation_scores: Json | null;
+          ai_moderation_model: string | null;
+          ai_moderation_checked_at: string | null;
+          ai_moderation_error: string | null;
           moderated_at: string | null;
           moderated_by_user_id: string | null;
           created_at: string;
@@ -94,6 +102,7 @@ export type Database = {
           artist_id?: string | null;
           auth_user_id?: string | null;
           submitter_email?: string | null;
+          submission_attempt_id?: string | null;
           artist_name: string;
           track_title: string;
           track_url: string;
@@ -101,7 +110,14 @@ export type Database = {
           message?: string | null;
           rights_confirmed: boolean;
           status?: "pending" | "queued" | "played" | "reviewed" | "rejected";
-          moderation_status?: "approved" | "rejected" | "removed";
+          moderation_status?: "pending_review" | "approved" | "rejected" | "removed";
+          ai_moderation_status?: "unchecked" | "clean" | "flagged" | "error";
+          requires_manual_review?: boolean;
+          ai_moderation_categories?: Json | null;
+          ai_moderation_scores?: Json | null;
+          ai_moderation_model?: string | null;
+          ai_moderation_checked_at?: string | null;
+          ai_moderation_error?: string | null;
           moderated_at?: string | null;
           moderated_by_user_id?: string | null;
           created_at?: string;
@@ -112,6 +128,7 @@ export type Database = {
           artist_id?: string | null;
           auth_user_id?: string | null;
           submitter_email?: string | null;
+          submission_attempt_id?: string | null;
           artist_name?: string;
           track_title?: string;
           track_url?: string;
@@ -119,7 +136,14 @@ export type Database = {
           message?: string | null;
           rights_confirmed?: boolean;
           status?: "pending" | "queued" | "played" | "reviewed" | "rejected";
-          moderation_status?: "approved" | "rejected" | "removed";
+          moderation_status?: "pending_review" | "approved" | "rejected" | "removed";
+          ai_moderation_status?: "unchecked" | "clean" | "flagged" | "error";
+          requires_manual_review?: boolean;
+          ai_moderation_categories?: Json | null;
+          ai_moderation_scores?: Json | null;
+          ai_moderation_model?: string | null;
+          ai_moderation_checked_at?: string | null;
+          ai_moderation_error?: string | null;
           moderated_at?: string | null;
           moderated_by_user_id?: string | null;
           created_at?: string;
@@ -360,6 +384,9 @@ export type Database = {
           submission_id: string;
           artist_name: string;
           track_title: string;
+          genre: string;
+          track_url: string;
+          message: string | null;
           submitter: string;
           submitter_email: string | null;
           submitter_avatar_url: string | null;
@@ -368,6 +395,13 @@ export type Database = {
           created_at: string;
           moderation_status: string;
           queue_status: string;
+          requires_manual_review: boolean;
+          ai_moderation_status: string;
+          ai_moderation_categories: Json | null;
+          ai_moderation_scores: Json | null;
+          ai_moderation_model: string | null;
+          ai_moderation_checked_at: string | null;
+          ai_moderation_error: string | null;
         }[];
       };
       search_moderation_submissions: {
@@ -378,6 +412,9 @@ export type Database = {
           submission_id: string;
           artist_name: string;
           track_title: string;
+          genre: string;
+          track_url: string;
+          message: string | null;
           submitter: string;
           submitter_email: string | null;
           submitter_avatar_url: string | null;
@@ -386,12 +423,40 @@ export type Database = {
           created_at: string;
           moderation_status: string;
           queue_status: string;
+          requires_manual_review: boolean;
+          ai_moderation_status: string;
+          ai_moderation_categories: Json | null;
+          ai_moderation_scores: Json | null;
+          ai_moderation_model: string | null;
+          ai_moderation_checked_at: string | null;
+          ai_moderation_error: string | null;
         }[];
       };
       set_submission_moderation_status: {
         Args: {
           p_submission_id: string;
           p_status: string;
+        };
+        Returns: Database["public"]["Tables"]["submissions"]["Row"];
+      };
+      create_submission_after_ai_moderation: {
+        Args: {
+          p_auth_user_id: string;
+          p_submitter_email: string | null;
+          p_artist_name: string;
+          p_track_title: string;
+          p_track_url: string;
+          p_genre: string;
+          p_message: string | null;
+          p_rights_confirmed: boolean;
+          p_submission_attempt_id: string;
+          p_ai_moderation_status: string;
+          p_requires_manual_review: boolean;
+          p_ai_moderation_categories: Json | null;
+          p_ai_moderation_scores: Json | null;
+          p_ai_moderation_model: string;
+          p_ai_moderation_checked_at: string;
+          p_ai_moderation_error: string | null;
         };
         Returns: Database["public"]["Tables"]["submissions"]["Row"];
       };

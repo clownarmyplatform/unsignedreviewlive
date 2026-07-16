@@ -11,8 +11,11 @@ import {
   MIN_GLOBAL_SEARCH_QUERY_LENGTH,
 } from "@/lib/global-search";
 import {
+  aiModerationStatusTone,
   formatModerationActionLabel,
+  formatModerationCategoryLabel,
   formatModerationDate,
+  getFlaggedModerationCategories,
   moderationStatusTone,
   type ModerationAuditRow,
   type ModerationSubmissionRow,
@@ -45,6 +48,9 @@ export function AdminModerationPanel() {
     tone: "success" | "error";
     text: string;
   } | null>(null);
+  const [submissionFilter, setSubmissionFilter] = useState<
+    "all" | "review-needed" | "ai-flagged"
+  >("all");
   const [isPending, startTransition] = useTransition();
 
   async function loadAuditLog() {
@@ -319,7 +325,7 @@ export function AdminModerationPanel() {
 
   function handleSubmissionModeration(
     submissionId: string,
-    nextStatus: "approved" | "rejected" | "removed",
+    nextStatus: "pending_review" | "approved" | "rejected" | "removed",
   ) {
     startTransition(async () => {
       setFeedbackMessage(null);
@@ -345,6 +351,7 @@ export function AdminModerationPanel() {
               ? {
                   ...item,
                   moderation_status: data.moderation_status,
+                  requires_manual_review: data.requires_manual_review,
                 }
               : item,
           ),
@@ -354,7 +361,9 @@ export function AdminModerationPanel() {
           tone: "success",
           text:
             nextStatus === "approved"
-              ? "Submission restored to approved."
+              ? "Submission approved."
+              : nextStatus === "pending_review"
+                ? "Submission returned to review."
               : nextStatus === "rejected"
                 ? "Submission rejected."
                 : "Submission removed from public queues.",
@@ -370,6 +379,18 @@ export function AdminModerationPanel() {
       }
     });
   }
+
+  const visibleSubmissions = submissions.filter((submission) => {
+    if (submissionFilter === "review-needed") {
+      return submission.requires_manual_review;
+    }
+
+    if (submissionFilter === "ai-flagged") {
+      return submission.ai_moderation_status === "flagged";
+    }
+
+    return true;
+  });
 
   return (
     <div className="space-y-6">
@@ -522,6 +543,27 @@ export function AdminModerationPanel() {
             onChange={setSubmissionSearchQuery}
           />
 
+          <div className="flex flex-wrap gap-3">
+            {[
+              { label: "All", value: "all" as const },
+              { label: "Needs Review", value: "review-needed" as const },
+              { label: "AI Flagged", value: "ai-flagged" as const },
+            ].map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => setSubmissionFilter(option.value)}
+                className={`rounded-2xl border px-4 py-2 text-sm font-semibold transition ${
+                  submissionFilter === option.value
+                    ? "border-fuchsia-400/40 bg-fuchsia-500/10 text-fuchsia-100"
+                    : "border-white/10 bg-black/20 text-zinc-300 hover:bg-white/5"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+
           <div className="max-h-[34rem] space-y-3 overflow-y-auto pr-1 [scrollbar-color:#3f3f46_#18181b] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-zinc-700 [&::-webkit-scrollbar-track]:bg-zinc-900/80 [&::-webkit-scrollbar]:w-2">
             {submissionSearchQuery.trim().length > 0 &&
             submissionSearchQuery.trim().length < MIN_GLOBAL_SEARCH_QUERY_LENGTH ? (
@@ -537,90 +579,147 @@ export function AdminModerationPanel() {
               <div className="rounded-[22px] border border-rose-400/30 bg-rose-400/10 p-4 text-sm leading-6 text-rose-100">
                 {submissionsError}
               </div>
-            ) : submissions.length > 0 ? (
-              submissions.map((submission) => (
-                <div
-                  key={submission.submission_id}
-                  className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4"
-                >
-                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                    <div className="flex items-start gap-3">
-                      <UserAvatar
-                        imageUrl={submission.submitter_avatar_url}
-                        name={submission.submitter}
-                        className="h-12 w-12"
-                        textClassName="text-xs"
-                      />
-                      <div>
-                        <div className="flex flex-wrap gap-2">
-                          <StatusPill tone={moderationStatusTone(submission.moderation_status)}>
-                            {submission.moderation_status}
-                          </StatusPill>
-                          <StatusPill tone="neutral">
-                            Queue:{" "}
-                            {submission.queue_status === "pending"
-                              ? "submitted"
-                              : submission.queue_status}
-                          </StatusPill>
-                        </div>
-                        <p className="mt-3 text-lg font-semibold text-white">
-                          {submission.artist_name} - {submission.track_title}
-                        </p>
-                        <p className="mt-1 text-sm leading-6 text-zinc-300">
-                          Submitter: {submission.submitter}
-                        </p>
-                        {submission.submitter_email ? (
-                          <p className="mt-1 break-all text-sm leading-6 text-zinc-500">
-                            {submission.submitter_email}
+            ) : visibleSubmissions.length > 0 ? (
+              visibleSubmissions.map((submission) => {
+                const flaggedCategories = getFlaggedModerationCategories(
+                  submission.ai_moderation_categories,
+                );
+
+                return (
+                  <div
+                    key={submission.submission_id}
+                    className="rounded-[22px] border border-cyan-500/15 bg-[linear-gradient(180deg,rgba(11,11,27,0.92),rgba(7,9,20,0.82))] p-4"
+                  >
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                      <div className="flex items-start gap-3">
+                        <UserAvatar
+                          imageUrl={submission.submitter_avatar_url}
+                          name={submission.submitter}
+                          className="h-12 w-12"
+                          textClassName="text-xs"
+                        />
+                        <div>
+                          <div className="flex flex-wrap gap-2">
+                            <StatusPill tone={moderationStatusTone(submission.moderation_status)}>
+                              {submission.moderation_status}
+                            </StatusPill>
+                            <StatusPill tone={aiModerationStatusTone(submission.ai_moderation_status)}>
+                              AI {submission.ai_moderation_status}
+                            </StatusPill>
+                            <StatusPill tone="neutral">
+                              Queue:{" "}
+                              {submission.queue_status === "pending"
+                                ? "submitted"
+                                : submission.queue_status}
+                            </StatusPill>
+                            {submission.requires_manual_review ? (
+                              <StatusPill tone="warning">Needs review</StatusPill>
+                            ) : null}
+                          </div>
+                          <p className="mt-3 text-lg font-semibold text-white">
+                            {submission.artist_name} - {submission.track_title}
                           </p>
-                        ) : null}
-                        <p className="mt-1 text-sm leading-6 text-zinc-500">
-                          Show: {submission.show_title || "Unassigned"} | Submitted{" "}
-                          {formatModerationDate(submission.created_at)}
-                        </p>
+                          <p className="mt-1 text-sm leading-6 text-zinc-300">
+                            Submitter: {submission.submitter}
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-zinc-400">
+                            Genre: {submission.genre}
+                          </p>
+                          {submission.submitter_email ? (
+                            <p className="mt-1 break-all text-sm leading-6 text-zinc-500">
+                              {submission.submitter_email}
+                            </p>
+                          ) : null}
+                          <p className="mt-1 break-all text-sm leading-6 text-zinc-500">
+                            {submission.track_url}
+                          </p>
+                          {submission.message ? (
+                            <p className="mt-2 text-sm leading-6 text-zinc-300">
+                              {submission.message}
+                            </p>
+                          ) : null}
+                          <p className="mt-1 text-sm leading-6 text-zinc-500">
+                            Show: {submission.show_title || "Unassigned"} | Submitted{" "}
+                            {formatModerationDate(submission.created_at)}
+                          </p>
+                          <p className="mt-1 text-sm leading-6 text-zinc-500">
+                            Categories:{" "}
+                            {flaggedCategories.length > 0
+                              ? flaggedCategories
+                                  .map((category) =>
+                                    formatModerationCategoryLabel(category),
+                                  )
+                                  .join(", ")
+                              : "No AI flags"}
+                          </p>
+                          {submission.ai_moderation_checked_at ? (
+                            <p className="mt-1 text-sm leading-6 text-zinc-500">
+                              {submission.ai_moderation_model || "omni-moderation-latest"} | Checked{" "}
+                              {formatModerationDate(submission.ai_moderation_checked_at)}
+                            </p>
+                          ) : null}
+                          {submission.ai_moderation_error ? (
+                            <p className="mt-1 text-sm leading-6 text-amber-200">
+                              Moderation issue: {submission.ai_moderation_error}
+                            </p>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-3">
+                        <button
+                          type="button"
+                          disabled={isPending || submission.moderation_status === "approved"}
+                          onClick={() =>
+                            handleSubmissionModeration(submission.submission_id, "approved")
+                          }
+                          className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          Approve Submission
+                        </button>
+                        <button
+                          type="button"
+                          disabled={isPending || submission.moderation_status === "pending_review"}
+                          onClick={() =>
+                            handleSubmissionModeration(
+                              submission.submission_id,
+                              "pending_review",
+                            )
+                          }
+                          className="rounded-2xl border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:bg-amber-300/20 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          Return To Review
+                        </button>
+                        <button
+                          type="button"
+                          disabled={isPending || submission.moderation_status === "rejected"}
+                          onClick={() =>
+                            handleSubmissionModeration(submission.submission_id, "rejected")
+                          }
+                          className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          Reject Submission
+                        </button>
+                        <button
+                          type="button"
+                          disabled={isPending || submission.moderation_status === "removed"}
+                          onClick={() =>
+                            handleSubmissionModeration(submission.submission_id, "removed")
+                          }
+                          className="rounded-2xl border border-rose-400/30 bg-rose-400/10 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-400/20 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                          Remove Submission
+                        </button>
                       </div>
                     </div>
-
-                    <div className="flex flex-wrap gap-3">
-                      <button
-                        type="button"
-                        disabled={isPending || submission.moderation_status === "removed"}
-                        onClick={() =>
-                          handleSubmissionModeration(submission.submission_id, "removed")
-                        }
-                        className="rounded-2xl border border-rose-400/30 bg-rose-400/10 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-400/20 disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        Remove Submission
-                      </button>
-                      <button
-                        type="button"
-                        disabled={isPending || submission.moderation_status === "rejected"}
-                        onClick={() =>
-                          handleSubmissionModeration(submission.submission_id, "rejected")
-                        }
-                        className="rounded-2xl border border-fuchsia-500/15 bg-[rgba(20,15,36,0.72)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        Reject Submission
-                      </button>
-                      <button
-                        type="button"
-                        disabled={isPending || submission.moderation_status === "approved"}
-                        onClick={() =>
-                          handleSubmissionModeration(submission.submission_id, "approved")
-                        }
-                        className="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 disabled:cursor-not-allowed disabled:opacity-60"
-                      >
-                        Restore To Approved
-                      </button>
-                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <div className="rounded-[22px] border border-dashed border-white/10 bg-black/20 p-4 text-sm leading-6 text-zinc-300">
                 {submissionSearchQuery.trim().length >= MIN_GLOBAL_SEARCH_QUERY_LENGTH
                   ? "No submissions match that search."
-                  : "No submissions found."}
+                  : "No submissions found for this filter."}
               </div>
             )}
           </div>

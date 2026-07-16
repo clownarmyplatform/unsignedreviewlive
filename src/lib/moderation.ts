@@ -1,4 +1,4 @@
-import type { Database } from "@/lib/supabase/types";
+import type { Database, Json } from "@/lib/supabase/types";
 
 type ModerationTone = "accent" | "warning" | "neutral" | "success";
 
@@ -26,11 +26,41 @@ export function moderationStatusTone(status: string): ModerationTone {
     return "success";
   }
 
+  if (status === "pending_review") {
+    return "warning";
+  }
+
   if (status === "suspended" || status === "rejected" || status === "removed") {
     return "warning";
   }
 
   return "neutral";
+}
+
+export function aiModerationStatusTone(status: string): ModerationTone {
+  if (status === "clean") {
+    return "success";
+  }
+
+  if (status === "flagged" || status === "error") {
+    return "warning";
+  }
+
+  return "neutral";
+}
+
+export function getFlaggedModerationCategories(value: Json | null) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return [] as string[];
+  }
+
+  return Object.entries(value)
+    .filter(([, isFlagged]) => isFlagged === true)
+    .map(([category]) => category);
+}
+
+export function formatModerationCategoryLabel(category: string) {
+  return category.replace(/\//g, " / ").replace(/-/g, " ");
 }
 
 export function formatModerationActionLabel(actionType: string) {

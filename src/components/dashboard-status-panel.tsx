@@ -34,6 +34,10 @@ function statusTone(submission: SubmissionRow | null) {
     return "warning";
   }
 
+  if (submission?.moderation_status === "pending_review") {
+    return "warning";
+  }
+
   if (submission?.status === "pending") {
     return "warning";
   }
@@ -50,6 +54,10 @@ function statusTone(submission: SubmissionRow | null) {
 }
 
 function formatSubmissionStatus(submission: SubmissionRow | null) {
+  if (submission?.moderation_status === "pending_review") {
+    return "In Review";
+  }
+
   if (submission?.moderation_status === "rejected") {
     return "Rejected";
   }
@@ -262,7 +270,9 @@ export function DashboardStatusPanel() {
           )}
           {submission ? (
             <p className="mt-2 text-sm leading-6 text-zinc-400">
-              {submission.moderation_status === "rejected"
+              {submission.moderation_status === "pending_review"
+                ? "This submission is waiting for moderation review before it can appear publicly."
+                : submission.moderation_status === "rejected"
                 ? "This submission was rejected by moderation."
                 : submission.moderation_status === "removed"
                   ? "This submission was removed by moderation."

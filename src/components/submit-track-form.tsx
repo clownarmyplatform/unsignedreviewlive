@@ -46,8 +46,12 @@ const initialState: SubmissionState = { type: "idle" };
 
 type SubmissionRow = Database["public"]["Tables"]["submissions"]["Row"];
 
+function createSubmissionAttemptId() {
+  return crypto.randomUUID();
+}
+
 export function SubmitTrackForm() {
-  const { user } = useAuth();
+  const { session, user } = useAuth();
   const [submissionState, setSubmissionState] =
     useState<SubmissionState>(initialState);
   const [windowStatus, setWindowStatus] = useState<SubmissionWindowStatus | null>(
@@ -58,6 +62,9 @@ export function SubmitTrackForm() {
   );
   const [isLoadingWindow, setIsLoadingWindow] = useState(true);
   const [isPending, startTransition] = useTransition();
+  const [submissionAttemptId, setSubmissionAttemptId] = useState(
+    createSubmissionAttemptId,
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -187,29 +194,47 @@ export function SubmitTrackForm() {
       }
 
       try {
-        const supabase = getSupabaseBrowserClient();
-        const { data, error } = await supabase.rpc(
-          "create_submission_for_next_show",
-          {
-            p_artist_name: artistName,
-            p_track_title: trackTitle,
-            p_track_url: trackUrl,
-            p_genre: genre,
-            p_message: message,
-            p_rights_confirmed: rightsConfirmed,
-          },
-        );
-
-        if (error) {
+        if (!session?.access_token) {
           setSubmissionState({
             type: "error",
-            message: error.message,
+            message: "You must be signed in to submit a track.",
+          });
+          return;
+        }
+
+        const response = await fetch("/api/submissions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            artist_name: artistName,
+            track_title: trackTitle,
+            track_url: trackUrl,
+            genre,
+            message,
+            rights_confirmed: rightsConfirmed,
+            submission_attempt_id: submissionAttemptId,
+          }),
+        });
+        const payload = (await response.json()) as {
+          error?: string;
+          message?: string;
+          submission?: SubmissionRow;
+        };
+
+        if (!response.ok || !payload.submission) {
+          setSubmissionState({
+            type: "error",
+            message:
+              payload.error ?? "Something went wrong while submitting your track.",
           });
           return;
         }
 
         form.reset();
-        setExistingSubmission(data ?? null);
+        setExistingSubmission(payload.submission);
         setWindowStatus((current) =>
           current
             ? {
@@ -220,12 +245,10 @@ export function SubmitTrackForm() {
               }
             : current,
         );
+        setSubmissionAttemptId(createSubmissionAttemptId());
         setSubmissionState({
           type: "success",
-          message:
-            data?.show_id
-              ? "Track submitted successfully for the next upcoming show."
-              : "Track submitted successfully.",
+          message: payload.message ?? "Track submitted successfully.",
         });
       } catch (error) {
         const message =
