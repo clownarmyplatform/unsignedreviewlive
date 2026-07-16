@@ -1,20 +1,14 @@
+import { HomePageIntro } from "@/components/home-page-intro";
 import { HomeNoticeboardPreview } from "@/components/home-noticeboard-preview";
 import { HomeShowFlowPanel } from "@/components/home-show-flow-panel";
 import { LatestTotnWinnerPanel } from "@/components/latest-totn-winner-panel";
-import { PageIntro } from "@/components/ui/page-intro";
-import { PublicHomeActions } from "@/components/public-home-actions";
 import { PublicHomeShowPanel } from "@/components/public-home-show-panel";
 import { SectionCard } from "@/components/ui/section-card";
 
 export default function HomePage() {
   return (
     <div className="space-y-6">
-      <PageIntro
-        eyebrow="uniqueKontent"
-        title="Welcome to uniqueKontent"
-        description="Sign in or create an account to submit your track for review on our weekly show!"
-        actions={<PublicHomeActions />}
-      />
+      <HomePageIntro />
 
       <div className="grid gap-6">
         <SectionCard title="Upcoming Show">

@@ -1,5 +1,5 @@
 type PageIntroProps = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description?: string;
   actions?: React.ReactNode;
@@ -16,7 +16,9 @@ export function PageIntro({
   return (
     <section className="uk-panel mb-5 rounded-[24px] p-4 sm:mb-6 sm:rounded-[32px] sm:p-7">
       <div className="mb-3 flex flex-wrap items-center gap-3">
-        <p className="uk-eyebrow text-xs uppercase tracking-[0.35em]">{eyebrow}</p>
+        {eyebrow ? (
+          <p className="uk-eyebrow text-xs uppercase tracking-[0.35em]">{eyebrow}</p>
+        ) : null}
         {badge ? (
           <span className="uk-badge rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em]">
             {badge}
