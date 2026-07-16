@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppConstructionGate } from "@/components/app-construction-gate";
 import { PwaBoot } from "@/components/pwa-boot";
 import { GlobalSearchBar } from "@/components/global-search-bar";
@@ -13,10 +13,14 @@ import { usePwaInstall } from "@/hooks/use-pwa-install";
 import { getNavItemsForRole } from "@/lib/mock-data";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const HEADER_COLLAPSE_SCROLL_Y = 72;
+  const HEADER_EXPAND_SCROLL_Y = 12;
+  const HEADER_SCROLL_DELTA_EPSILON = 4;
   const { profile, role, user } = useAuth();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
+  const isHeaderCollapsedRef = useRef(false);
   const navItems = getNavItemsForRole(role, !!user);
   const {
     canInstall,
@@ -27,26 +31,63 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   } = usePwaInstall();
 
   useEffect(() => {
-    function handleScroll() {
-      const currentScrollY = window.scrollY;
+    let frameId = 0;
+    let lastScrollY = Math.max(window.scrollY, 0);
 
-      if (currentScrollY < 24) {
-        setIsHeaderCollapsed(false);
+    const updateHeaderState = () => {
+      frameId = 0;
+
+      const currentScrollY = Math.max(window.scrollY, 0);
+      const delta = currentScrollY - lastScrollY;
+      lastScrollY = currentScrollY;
+
+      if (currentScrollY <= HEADER_EXPAND_SCROLL_Y) {
+        if (isHeaderCollapsedRef.current) {
+          isHeaderCollapsedRef.current = false;
+          setIsHeaderCollapsed(false);
+        }
         return;
       }
 
-      setIsHeaderCollapsed(true);
+      if (Math.abs(delta) < HEADER_SCROLL_DELTA_EPSILON) {
+        return;
+      }
+
+      if (!isHeaderCollapsedRef.current && delta > 0 && currentScrollY >= HEADER_COLLAPSE_SCROLL_Y) {
+        isHeaderCollapsedRef.current = true;
+        setIsHeaderCollapsed(true);
+        return;
+      }
+
+      if (isHeaderCollapsedRef.current && delta < 0 && currentScrollY <= HEADER_COLLAPSE_SCROLL_Y / 2) {
+        isHeaderCollapsedRef.current = false;
+        setIsHeaderCollapsed(false);
+      }
+    };
+
+    function handleScroll() {
+      if (frameId !== 0) {
+        return;
+      }
+
+      frameId = window.requestAnimationFrame(updateHeaderState);
     }
+
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId);
+      }
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
+      isHeaderCollapsedRef.current = false;
       setIsHeaderCollapsed(false);
       setIsMenuOpen(false);
       setIsShowingIosInstructions(false);
